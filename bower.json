@@ -1,0 +1,14 @@
+{
+  "name": "uqlibrary-hours",
+  "version": "0.0.1",
+  "keywords": [
+    "seed",
+    "polymer",
+    "web-components"
+  ],
+  "private": true,
+  "main": "uqlibrary-hours.html",
+  "dependencies": {
+    "uqlibrary-elements": "uqlibrary/uqlibrary-elements#master"
+  }
+}
