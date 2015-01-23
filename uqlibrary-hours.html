@@ -104,6 +104,7 @@ Element providing an overview for current libraries working hours
           that.hours = e.detail;
         });
         if(this.autoload){
+          this.$.account.get();
           this.$.hoursApi.get();
         }
       },
