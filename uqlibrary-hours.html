@@ -54,13 +54,15 @@ Element providing an overview for current libraries working hours
             <core-list id="list" data="{{hours}}" fit>
               <template>
                 <li class="list-item border">
-                  <div class="content">
-                    <paper-ripple fit></paper-ripple>
-                    <div class="line1">{{model.name}}</div>
-                    <div class="line2">
-
+                  <div class="content" layout horizontal>
+                    <div flex>
+                      <paper-ripple fit></paper-ripple>
+                      <div class="line1">{{model.name}}</div>
+                      <div class="line2">
+                      </div>
+                      <div class="line3" >{{model.times}}</div>
                     </div>
-                    <div class="line3" >{{model.times}}</div>
+                    <div self-centered class="headline {{model.class}}">&bull;</div>
                   </div>
                 </li>
           </template>
@@ -113,18 +115,23 @@ Element providing an overview for current libraries working hours
         if(this.hours.length > 0 ) {
           var dayString = moment().format('YYYY-MM-DD');
           var _open, _close, _diff;
+          var _now = moment();
           for(var i = 0; i < this.hours.length; i++) {
             _open = moment(dayString+ ' ' + this.hours[i].open);
             _close = moment(dayString+ ' ' + this.hours[i].close);
             _diff = _close.diff(_open, 'hours');
             if(_diff == 24) {
               this.hours[i].times = 'Open 24 hours';
+              this.hours[i].class = 'open';
             }
             else if( _diff == 0) {
               this.hours[i].times = 'Closed';
+              this.hours[i].class = 'closed';
+
             }
             else {
               this.hours[i].times = _open.format("h:mm a") + ' - ' + _close.format("h:mm a");
+              this.hours[i].class = ((_open.isBefore(_now) && _close.isAfter(_now)) ? 'open' : 'closed');
             }
           }
         }

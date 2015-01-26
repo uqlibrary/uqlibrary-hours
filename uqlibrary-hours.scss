@@ -1,2 +1,9 @@
 @import "../uqlibrary-elements/resources/theme/element";
 
+.open {
+  color: $accent !important;
+}
+
+.closed {
+  color: $uq-warm-red !important;
+}

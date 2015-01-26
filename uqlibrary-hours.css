@@ -780,3 +780,9 @@ paper-fab {
 ::content * {
   box-sizing: border-box;
   outline: none; }
+
+.open {
+  color: #8db800 !important; }
+
+.closed {
+  color: #ce4627 !important; }
