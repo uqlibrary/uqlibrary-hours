@@ -59,7 +59,7 @@ Element providing an overview for current libraries working hours
                       <div flex>
                         <paper-ripple fit></paper-ripple>
                         <div class="line1">{{model.name}}</div>
-                        <div class="text"><span class="body1">{{model.times}}</span> <span hidden?={{!model.notes}}>&mdash;</span> {{model.notes}}</div>
+                        <div class="text"><span class="body1">{{model.times}}</span> <span hidden?={{!model.notes}}>&mdash; {{model.notes}}</span> </div>
                       </div>
                       <div class="headline {{model.class}}">&bull;</div>
                     </div>
@@ -135,8 +135,7 @@ Element providing an overview for current libraries working hours
             }
 
             if(this.hours[i].notes) {
-              this.hours[i].notes =  this.hours[i].notes.replace(/&amp;/g, '&');
-
+              this.hours[i].notes =  this.hours[i].notes.replace(/&amp;/g, '&').replace(/&ndash;/g, '-');
             }
 
           }
