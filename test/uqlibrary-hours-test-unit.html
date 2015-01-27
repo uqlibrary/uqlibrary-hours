@@ -3,9 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-  <title>uqlibrary-hours</title>
+  <title>uqlibrary-hours-unit</title>
 
-  <script src="../../webcomponentsjs/webcomponents.min.js"></script>
   <script src="../../web-component-tester/browser.js"></script>
 
   <link rel="import" href="../uqlibrary-hours.html">
@@ -16,6 +15,59 @@
 
 <script>
   window.addEventListener('polymer-ready', function() {
+
+    var hours = [
+      {
+        "code": "arm",
+        "name": "Architecture / Music Library",
+        "abbr": "Arch Music",
+        "url": "http://www.library.uq.edu.au/locations/architecture-music-library",
+        "open": "09:00:00",
+        "close": "17:00:00",
+        "rev": "0"
+      },
+      {
+        "code": "bio",
+        "name": "Biological Sciences Library",
+        "abbr": "Biol Sci",
+        "url": "http://www.library.uq.edu.au/locations/biological-sciences-library",
+        "open": "00:00:00",
+        "close": "24:00:00",
+        "rev": "0",
+        "notes": "Walk in access from 7am to 8pm. Entry after 8pm UQ ID card necessary."
+      }
+    ];
+
+    var hoursEl = document.querySelector('uqlibrary-hours');
+    describe('uqlibrary-hours', function () {
+      before(function () {
+
+      });
+
+      describe('uqlibrary-hours-list', function() {
+        it('should display hours', function(done) {
+
+          hoursEl.addEventListener('uqlibrary-hours-loaded', function(){
+            var _items = hoursEl.$.list.data;
+            expect(_items.length).to.be.equal(hours.length);
+
+            expect(_items[0].name).to.be.equal(hours[0].name);
+
+            var dayString = moment().format('YYYY-MM-DD');
+            var _open = moment(dayString+ ' ' + this.hours[0].open);
+            var _close = moment(dayString+ ' ' + this.hours[0].close);
+            expect(_items[0].times).to.be.equal(_open.format("h:mm a") + ' - ' + _close.format("h:mm a"));
+
+            expect(_items[1].name).to.be.equal(hours[1].name);
+            expect(_items[1].times).to.be.equal('Open 24 hours');
+            done();
+          });
+
+          hoursEl.hours = hours;
+        });
+      });
+
+    });
 
   });
 </script>

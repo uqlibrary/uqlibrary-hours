@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <title>uqlibrary-hours-integration</title>
+
+  <script src="../../web-component-tester/browser.js"></script>
+
+  <link rel="import" href="../uqlibrary-hours.html">
+</head>
+<body>
+
+<uqlibrary-hours autoload="false"></uqlibrary-hours>
+
+<script>
+  window.addEventListener('polymer-ready', function() {
+
+    var hoursEl = document.querySelector('uqlibrary-hours');
+    hoursEl.$.hoursApi.$.list.useMockData = true;
+
+    describe('uqlibrary-hours', function () {
+      before(function () {
+
+      });
+
+      describe('uqlibrary-hours-list', function() {
+
+        it('should display hours', function(done) {
+
+          hoursEl.addEventListener('uqlibrary-hours-loaded', function(){
+            //wait 2 seconds until data is loaded
+            setTimeout(function() {
+
+              var _items = hoursEl.$.list.data;
+              expect(_items.length).to.be.equal(hoursEl.hours.length);
+
+              expect(_items[0].name).to.be.equal(hoursEl.hours[0].name);
+              var dayString = moment().format('YYYY-MM-DD');
+              var _open = moment(dayString+ ' ' + hoursEl.hours[0].open);
+              var _close = moment(dayString+ ' ' + hoursEl.hours[0].close);
+              var _now = moment();
+              expect(_items[0].times).to.be.equal(_open.format("h:mm a") + ' - ' + _close.format("h:mm a"));
+
+              expect(_items[0].class).to.be.equal( ((_open.isBefore(_now) && _close.isAfter(_now)) ? 'open' : 'closed') );
+
+              expect(_items[1].name).to.be.equal(hoursEl.hours[1].name);
+              expect(_items[1].times).to.be.equal('Open 24 hours');
+              done();
+              
+            }, 2000);
+          });
+
+          hoursEl.$.hoursApi.get();
+        });
+      });
+
+    });
+
+  });
+</script>
+
+</body>
+</html>

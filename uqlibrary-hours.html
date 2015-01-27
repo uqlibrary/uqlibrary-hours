@@ -49,21 +49,21 @@ Element providing an overview for current libraries working hours
         </core-toolbar>
 
         <div id="content">
-          <ul class="three-line-list">
+          <ul class="three-line-text-list">
             <li class="gap"></li>
             <core-list id="list" data="{{hours}}" fit>
               <template>
                 <li class="list-item border">
-                  <div class="content" layout horizontal>
-                    <div flex>
-                      <paper-ripple fit></paper-ripple>
-                      <div class="line1">{{model.name}}</div>
-                      <div class="line2">
+                  <a target="_blank" href="{{model.url}}">
+                    <div class="content" layout horizontal>
+                      <div flex>
+                        <paper-ripple fit></paper-ripple>
+                        <div class="line1">{{model.name}}</div>
+                        <div class="text"><span class="body1">{{model.times}}</span> <span hidden?={{!model.notes}}>&mdash;</span> {{model.notes}}</div>
                       </div>
-                      <div class="line3" >{{model.times}}</div>
+                      <div class="headline {{model.class}}">&bull;</div>
                     </div>
-                    <div self-centered class="headline {{model.class}}">&bull;</div>
-                  </div>
+                  </a>
                 </li>
           </template>
           </core-list>
@@ -133,8 +133,15 @@ Element providing an overview for current libraries working hours
               this.hours[i].times = _open.format("h:mm a") + ' - ' + _close.format("h:mm a");
               this.hours[i].class = ((_open.isBefore(_now) && _close.isAfter(_now)) ? 'open' : 'closed');
             }
+
+            if(this.hours[i].notes) {
+              this.hours[i].notes =  this.hours[i].notes.replace(/&amp;/g, '&');
+
+            }
+
           }
         }
+        this.fire('uqlibrary-hours-loaded');
       }
 
 
