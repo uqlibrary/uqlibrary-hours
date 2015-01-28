@@ -54,7 +54,7 @@ Element providing an overview for current libraries working hours
             <core-list id="list" data="{{hours}}" fit>
               <template>
                 <li class="list-item border">
-                  <a target="_blank" href="{{model.url}}">
+                  <a target="_blank" href="{{model.url}}" on-tap="{{itemTapHandler}}" title="{{model.name}}">
                     <div class="content" layout horizontal>
                       <div flex>
                         <paper-ripple fit></paper-ripple>
@@ -141,9 +141,12 @@ Element providing an overview for current libraries working hours
           }
         }
         this.fire('uqlibrary-hours-loaded');
+      },
+
+      itemTapHandler: function(e, detail, sender) {
+        var _title = sender.getAttribute('title');
+        this.$.ga.addEvent('Library details click', _title);
       }
-
-
 
     });
   </script>
