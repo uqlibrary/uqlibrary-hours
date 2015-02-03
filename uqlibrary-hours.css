@@ -871,4 +871,7 @@ paper-checkbox::shadow #checkbox {
 .closed {
   color: #ce4627 !important; }
 
+.list-margin {
+  margin-bottom: 38px; }
+
 /*# sourceMappingURL=uqlibrary-hours.css.map */
