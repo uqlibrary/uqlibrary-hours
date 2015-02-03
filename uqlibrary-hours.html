@@ -47,11 +47,10 @@ Element providing an overview for current libraries working hours
           <span flex id="toolbar-page-title">Library Hours</span>
 
         </core-toolbar>
-
         <div id="content">
           <ul class="three-line-text-list">
             <li class="gap"></li>
-            <core-list id="list" data="{{hours}}" fit>
+            <core-list id="list" data="{{hours}}" fit class="list-margin">
               <template>
                 <li class="list-item border">
                   <a target="_blank" href="{{model.url}}" on-tap="{{itemTapHandler}}" title="{{model.name}}">
@@ -69,6 +68,13 @@ Element providing an overview for current libraries working hours
           </core-list>
           </ul>
         </div>
+        <uqlibrary-persistent-footer id="persistentFooter" actionButtons="{{actionButtons.footer}}" hidden?="{{finesSum == 0}}">
+          <div layout horizontal end-justified>
+            <div class="footer-buttons">
+              <paper-button raised class="colored" on-tap="{{viewHours}}">View hours for this week</paper-button>
+            </div>
+          </div>
+        </uqlibrary-persistent-footer>
       </core-header-panel>
 
     </core-drawer-panel>
@@ -109,6 +115,10 @@ Element providing an overview for current libraries working hours
           this.$.account.get();
           this.$.hoursApi.get();
         }
+      },
+
+      viewHours: function() {
+        window.open("https://www.library.uq.edu.au/hours/");
       },
 
       hoursChanged: function() {
