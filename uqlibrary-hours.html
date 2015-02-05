@@ -71,7 +71,7 @@ Element providing an overview for current libraries working hours
         <uqlibrary-persistent-footer id="persistentFooter" actionButtons="{{actionButtons.footer}}" hidden?="{{finesSum == 0}}">
           <div layout horizontal end-justified>
             <div class="footer-buttons">
-              <paper-button raised class="colored" on-tap="{{viewHours}}">View hours for this week</paper-button>
+                <a href="https://www.library.uq.edu.au/hours/" on-tap="{{viewHours}}"  target="_blank"><paper-button raised class="colored">View hours for this week</paper-button></a>
             </div>
           </div>
         </uqlibrary-persistent-footer>
@@ -118,7 +118,7 @@ Element providing an overview for current libraries working hours
       },
 
       viewHours: function() {
-        window.open("https://www.library.uq.edu.au/hours/");
+        this.$.ga.addEvent('Week hours button clicked');
       },
 
       hoursChanged: function() {
