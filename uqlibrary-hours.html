@@ -37,11 +37,11 @@ Element providing an overview for current libraries working hours
     <uqlibrary-ga id="ga" appName="Hours"></uqlibrary-ga>
 
     <core-drawer-panel id="drawerPanel" drawerWidth="256px" responsiveWidth="768px">
-      <core-header-panel drawer id="drawer">
+      <core-header-panel drawer class="drawer">
         <uqlibrary-menu account="{{user}}"></uqlibrary-menu>
       </core-header-panel>
 
-      <core-header-panel main id="main">
+      <core-header-panel main class="main">
         <core-toolbar>
           <paper-icon-button id="toolBarLeftButton" icon="menu" core-drawer-toggle></paper-icon-button>
           <span flex id="toolbar-page-title">Library Hours</span>
@@ -71,7 +71,7 @@ Element providing an overview for current libraries working hours
         <uqlibrary-persistent-footer id="persistentFooter" actionButtons="{{actionButtons.footer}}" hidden?="{{finesSum == 0}}">
           <div layout horizontal end-justified>
             <div class="footer-buttons">
-              <paper-button raised class="colored" on-tap="{{viewHours}}">View hours for this week</paper-button>
+                <a href="https://www.library.uq.edu.au/hours/" on-tap="{{viewHours}}"  target="_blank"><paper-button raised class="colored">View hours for this week</paper-button></a>
             </div>
           </div>
         </uqlibrary-persistent-footer>
@@ -118,7 +118,7 @@ Element providing an overview for current libraries working hours
       },
 
       viewHours: function() {
-        window.open("https://www.library.uq.edu.au/hours/");
+        this.$.ga.addEvent('Week hours button clicked');
       },
 
       hoursChanged: function() {
