@@ -154,7 +154,7 @@ Element providing an overview for current libraries working hours
 
             }
             else {
-              this.hours[i].times = _open.format("h:mm a") + ' &mdash; ' + _close.format("h:mm a");
+              this.hours[i].times = _open.format("h:mm a") + ' - ' + _close.format("h:mm a");
               this.hours[i].class = ((_open.isBefore(_now) && _close.isAfter(_now)) ? 'open' : 'closed');
             }
 
