@@ -44,7 +44,7 @@ Element providing an overview for current libraries working hours
       <core-header-panel main class="main">
         <core-toolbar>
           <paper-icon-button id="toolBarLeftButton" icon="menu" core-drawer-toggle></paper-icon-button>
-          <span flex id="toolbar-page-title">Library Hours</span>
+          <h1 flex id="toolbar-page-title">Library hours</h1>
 
         </core-toolbar>
         <div id="content" class="body-footer-container">
@@ -52,17 +52,27 @@ Element providing an overview for current libraries working hours
             <li class="gap"></li>
             <core-list id="list" data="{{hours}}" fit class="list-margin">
               <template>
-                <li class="list-item border">
-                  <a target="_blank" href="{{model.url}}" on-tap="{{itemTapHandler}}" title="{{model.name}}">
+
+                <li class="list-item border" role="link" data-title="{{model.name}}" data-code="{{model.code}}" on-tap="{{itemTapHandler}}">
+
                     <div class="content" layout horizontal>
-                      <div flex>
-                        <paper-ripple fit></paper-ripple>
-                        <div class="line1">{{model.name}}</div>
-                        <div class="text"><span class="body1">{{model.times}}</span> <span hidden?={{!model.notes}}>&mdash; {{model.notes}}</span> </div>
+
+                    <div flex>
+                      <paper-ripple fit></paper-ripple>
+
+                      <div class="line1">
+                        <a id="library-{{model.code}}" target="_blank" href="{{model.url}}" title="{{model.name}}">{{model.name}}</a>
                       </div>
-                      <div class="headline {{model.class}}">&bull;</div>
+
+                      <div class="text">
+                        <span class="body1">{{model.times}}</span>
+                        <span hidden?={{!model.notes}}>&mdash; {{model.notes}}</span>
+                      </div>
+
                     </div>
-                  </a>
+
+                    <div class="headline {{model.class}}" aria-label="library {{model.class}}">&bull;</div>
+                  </div>
                 </li>
           </template>
           </core-list>
@@ -158,8 +168,8 @@ Element providing an overview for current libraries working hours
       },
 
       itemTapHandler: function(e, detail, sender) {
-        var _title = sender.getAttribute('title');
-        this.$.ga.addEvent('Library details click', _title);
+        this.$.ga.addEvent('Library details click', sender.getAttribute('data-title'));
+        this.$.content.querySelector('#library-' + sender.getAttribute('data-code')).click();
       }
 
     });
