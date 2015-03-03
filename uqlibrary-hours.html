@@ -54,23 +54,19 @@ Element providing an overview for current libraries working hours
               <template>
 
                 <li class="list-item border" role="link" data-title="{{model.name}}" data-code="{{model.code}}" on-tap="{{itemTapHandler}}">
-
                     <div class="content" layout horizontal>
-
                     <div flex>
-                      <paper-ripple fit></paper-ripple>
-
                       <div class="line1">
-                        <a id="library-{{model.code}}" target="_blank" href="{{model.url}}" title="{{model.name}}">{{model.name}}</a>
+                        <a id="library-{{model.code}}" target="_blank" href="{{model.url}}" title="{{model.name}}">
+                          <paper-ripple fit></paper-ripple>
+                          {{model.name}}
+                        </a>
                       </div>
-
                       <div class="text">
                         <span class="body1">{{model.times}}</span>
                         <span hidden?={{!model.notes}}>&mdash; {{model.notes}}</span>
                       </div>
-
                     </div>
-
                     <div class="headline {{model.class}}" aria-label="library {{model.class}}">&bull;</div>
                   </div>
                 </li>
@@ -169,7 +165,6 @@ Element providing an overview for current libraries working hours
 
       itemTapHandler: function(e, detail, sender) {
         this.$.ga.addEvent('Library details click', sender.getAttribute('data-title'));
-        this.$.content.querySelector('#library-' + sender.getAttribute('data-code')).click();
       }
 
     });
