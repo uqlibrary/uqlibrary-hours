@@ -27,8 +27,6 @@ Element providing an overview for current libraries working hours
 
 <link rel="import" href="../uqlibrary-elements/0.5.4/lib/vulcanized.html">
 
-
-
 <polymer-element name="uqlibrary-hours" layout center attributes="hours autoload">
   <template>
     <link rel="stylesheet" href="../uqlibrary-elements/resources/theme/element.css">
@@ -43,6 +41,9 @@ Element providing an overview for current libraries working hours
 
       <core-header-panel main class="main">
         <core-toolbar>
+
+          <core-a11y-keys id="a11yToolBarLeftButton" target="{{$.toolBarLeftButton}}" keys="{{keyboardNavigationKeys}}"
+                          on-keys-pressed="{{ a11yKeyPressed }}"></core-a11y-keys>
           <paper-icon-button id="toolBarLeftButton" icon="menu" core-drawer-toggle></paper-icon-button>
           <h1 flex id="toolbar-page-title">Library hours</h1>
 
@@ -87,6 +88,16 @@ Element providing an overview for current libraries working hours
 
   <script>
     Polymer('uqlibrary-hours', {
+      // Accessibility issues fixes
+
+      keyboardNavigationKeys: 'space enter',
+
+      a11yKeyPressed: function(source, event) {
+        if (source.path && source.path.length > 0 && source.path[0].target) {
+          source.path[0].target.fire("tap");
+        }
+      },
+
 
       /**
        * The `hours` attribute contains information about hours
