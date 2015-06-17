@@ -9,6 +9,13 @@
   "private": true,
   "main": "uqlibrary-hours.html",
   "dependencies": {
-    "uqlibrary-elements": "uqlibrary/uqlibrary-elements#master"
+    "paper-drawer-panel": "PolymerElements/paper-drawer-panel#^1.0.1",
+    "paper-header-panel": "PolymerElements/paper-header-panel#^1.0.1",
+
+    "neon-animation": "PolymerElements/neon-animation#^1.0.0",
+    "moment": "moment/moment#^2.10.3"
+  },
+  "devDependencies": {
+    "web-component-tester": "*"
   }
 }
