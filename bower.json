@@ -9,13 +9,16 @@
   "private": true,
   "main": "uqlibrary-hours.html",
   "dependencies": {
+    "iron-elements": "PolymerElements/iron-elements#1.0.0",
+    "paper-elements": "PolymerElements/paper-elements#1.0.1",
+    "moment": "moment/moment#^2.10.3",
+
     "paper-drawer-panel": "PolymerElements/paper-drawer-panel#^1.0.1",
     "paper-header-panel": "PolymerElements/paper-header-panel#^1.0.1",
-
-    "neon-animation": "PolymerElements/neon-animation#^1.0.0",
-    "moment": "moment/moment#^2.10.3"
+    "neon-animation": "PolymerElements/neon-animation#^1.0.0"
   },
   "devDependencies": {
-    "web-component-tester": "*"
+    "web-component-tester": "*",
+    "test-fixture": "PolymerElements/test-fixture#^1.0.0"
   }
 }
