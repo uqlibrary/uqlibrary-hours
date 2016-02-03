@@ -1,64 +1,73 @@
 <!doctype html>
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
 <html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no">
-  <title>uqlibrary-hours-integration</title>
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <title>uql-ia-button</title>
 
-  <script src="../../webcomponentsjs/webcomponents.min.js"></script>
-  <script src="../../web-component-tester/browser.js"></script>
+    <script src="../bower_components/webcomponentsjs/webcomponents.min.js"></script>
+    <script src="../bower_components/web-component-tester/browser.js"></script>
+    <script src="../bower_components/test-fixture/test-fixture-mocha.js"></script>
+    <link rel="import" href="../bower_components/test-fixture/test-fixture.html">
 
-  <link rel="import" href="../uqlibrary-hours.html">
+    <!-- Import the element to test -->
+    <link rel="import" href="../uqlibrary-hours.html">
+
 </head>
 <body>
 
-<uqlibrary-hours autoload="false"></uqlibrary-hours>
+<test-fixture id="hours">
+    <template>
+        <uqlibrary-hours autoload="false"></uqlibrary-hours>
+    </template>
+</test-fixture>
 
 <script>
-  window.addEventListener('polymer-ready', function() {
+    suite('<uqlibrary-hours> tests', function () {
+        var element;
 
-    var hoursEl = document.querySelector('uqlibrary-hours');
-    hoursEl.$.hoursApi.$.list.useMockData = true;
+        setup(function () {
+            document.cookie="UQLMockData=enabled";
 
-    describe('uqlibrary-hours', function () {
-      before(function () {
-
-      });
-
-      describe('uqlibrary-hours-list', function() {
-
-        it('should display hours', function(done) {
-
-          hoursEl.addEventListener('uqlibrary-hours-loaded', function(){
-            //wait 2 seconds until data is loaded
-            setTimeout(function() {
-
-              var _items = hoursEl.$.list.data;
-              expect(_items.length).to.be.equal(hoursEl.hours.length);
-
-              expect(_items[0].name).to.be.equal(hoursEl.hours[0].name);
-              var dayString = moment().format('YYYY-MM-DD');
-              var _open = moment(dayString+ ' ' + hoursEl.hours[0].open);
-              var _close = moment(dayString+ ' ' + hoursEl.hours[0].close);
-              var _now = moment();
-              expect(_items[0].times).to.be.equal(_open.format("h:mm a") + ' - ' + _close.format("h:mm a"));
-
-              expect(_items[0].class).to.be.equal( ((_open.isBefore(_now) && _close.isAfter(_now)) ? 'open' : 'closed') );
-
-              expect(_items[1].name).to.be.equal(hoursEl.hours[1].name);
-              expect(_items[1].times).to.be.equal('Open 24 hours');
-              done();
-              
-            }, 2000);
-          });
-
-          hoursEl.$.hoursApi.get();
+            element = fixture('hours');
         });
-      });
 
+
+        test('It should load data', function (done) {
+            element.addEventListener('uqlibrary-hours-loaded', function(){
+                var _items = element.$.list.items;
+
+                // Check if the List has the right items
+                expect(_items.length).to.be.equal(element.hours.length);
+                expect(_items[0].name).to.be.equal(element.hours[0].name);
+
+                // Check opening hours functionality
+                var dayString = moment().format('YYYY-MM-DD');
+                var _open = moment(dayString+ ' ' + element.hours[0].open);
+                var _close = moment(dayString+ ' ' + element.hours[0].close);
+                var _now = moment();
+                expect(_items[0].times).to.be.equal(_open.format("h:mm a") + ' - ' + _close.format("h:mm a"));
+
+                expect(_items[0].class).to.be.equal( ((_open.isBefore(_now) && _close.isAfter(_now)) ? 'open' : 'closed') );
+
+                expect(_items[1].name).to.be.equal(element.hours[1].name);
+                expect(_items[1].times).to.be.equal('Open 24 hours');
+
+                done();
+            });
+
+            element.$.hoursApi.get();
+        });
     });
-
-  });
 </script>
 
 </body>

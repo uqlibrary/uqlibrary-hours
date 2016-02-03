@@ -1,207 +1,96 @@
+<link rel="import" href="elements.html">
+
+<!-- Custom JS -->
+<script type="text/javascript" src="bower_components/lodash/lodash.min.js"></script>
+<script type="text/javascript" src="bower_components/moment/moment.js"></script>
+
 <!--
-Element providing an overview for current libraries working hours
+`<uqlibrary-hours>` is a simple element that displays the opening hours for each of the libraries
 
-##### Example
+Example:
+      <uqlibrary-hours></uqlibrary-hours>
 
-    <uqlibrary-hours></uqlibrary-hours>
-
-    <script>
-    (function () {
-
-      window.addEventListener('polymer-ready', function() {
-
-        var hours = document.querySelector('uqlibrary-hours');
-
-        hours.hours = [
-
-          ];
-      });
-    }());
-  </script>
-
-@element uqlibrary-hours
-@blurb Element providing an overview for current libraries working hours
-@status alpha
-@homepage http://uqlibrary.github.io/uqlibrary-hours
+@demo demo/index.html
 -->
-
-<link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="../paper-drawer-panel/paper-drawer-panel.html">
-<link rel="import" href="../paper-header-panel/paper-header-panel.html">
-<link rel="import" href="../paper-toolbar/paper-toolbar.html">
-<link rel="import" href="../iron-a11y-keys/iron-a11y-keys.html">
-<script type="text/javascript" src="../moment/moment.js"></script>
-
-<link rel="import" href="../uqlibrary-api/uqlibrary-api-account.html">
-<link rel="import" href="../uqlibrary-api/uqlibrary-api-library-hours.html">
-<link rel="import" href="../uqlibrary-menu/uqlibrary-menu.html">
-
-
-
 <dom-module id="uqlibrary-hours">
-  <link rel="import" type="css" href="../uqlibrary-elements/resources/theme/element.css">
-  <link rel="import" type="css" href="uqlibrary-hours.css">
 
-  <template>
-    <uqlibrary-api-account id="account"></uqlibrary-api-account>
-    <uqlibrary-api-library-hours id="hoursApi"></uqlibrary-api-library-hours>
-    <!--<uqlibrary-ga id="ga" appName="Hours"></uqlibrary-ga>-->
+    <style is="custom-style" include="common-styles">
+        :host {
+            font-family: var(--font-family);
+        }
 
-    <paper-drawer-panel id="drawerPanel" class="drawer" drawerWidth="256px" responsiveWidth="768px">
-      <paper-header-panel drawer>
-        <uqlibrary-menu account="{{user}}" menu-file="../uqlibrary-elements/resources/menu/applications.json"></uqlibrary-menu>
-      </paper-header-panel>
+        .list-container {
+            padding-left: 0px;
+            overflow: visible;
+        }
 
-      <paper-header-panel main class="main">
-        <paper-toolbar>
+        .list-item {
+            border-bottom: 1px solid #ccc;
+            padding-left: 16px;
+            padding-right: 16px;
+        }
 
-          <iron-a11y-keys id="a11yToolBarLeftButton" keys="space enter"
-                          on-keys-pressed="a11yKeyPressed"></iron-a11y-keys>
-          <paper-icon-button id="toolBarLeftButton" icon="menu" paper-drawer-toggle></paper-icon-button>
-          <h1 class="flex" id="toolbar-page-title">Library hours</h1>
-        </paper-toolbar>
+        .content {
+            @apply(--layout-horizontal);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            padding-top: 10px;
+            height: 70px;
+        }
 
-        <div id="content" class="body-footer-container">
-          <ul class="three-line-text-list">
-            <li class="gap"></li>
-            <!--<core-list id="list" data="{{hours}}" fit class="list-margin">-->
-              <template is="dom-repeat" items="{{hours}}">
-                <li class="list-item border" role="link" data-title="{{item.name}}" data-code="{{item.code}}" on-tap="itemTapHandler">
-                  <div class="content layout horizontal">
-                    <div class="flex">
+        .library-info {
+            @apply(--layout-flex);
+        }
 
-                      <div class="line1">
-                        <a id="library-{{item.code}}" target="_blank" href="{{item.url}}" title="{{item.name}}">
-                          <span>{{item.name}}</span>
-                        </a>
-                      </div>
-                      <div class="text">
-                        <span class="body1">{{item.times}}</span>
-                        <span hidden$={{!item.notes}}>&mdash;<span>{{item.notes}}</span></span>
-                      </div>
+        .headline {
+            font-family: "Roboto";
+            font-weight: 400;
+            font-size: 1.8em;
+            line-height: 1.1em;
+            color: rgba(0,0,0,87);
+        }
+
+        .headline.open {
+            color: #38852e !important;
+        }
+
+        .headline.closed {
+            color: #ce4627 !important;
+        }
+
+        .notes {
+            color: rgba(0, 0, 0, 0.54);
+        }
+    </style>
+
+    <template>
+        <uqlibrary-api-account id="account"></uqlibrary-api-account>
+        <uqlibrary-api-library-hours id="hoursApi"></uqlibrary-api-library-hours>
+        <uqlibrary-ga id="ga" appName="Hours"></uqlibrary-ga>
+
+        <div class="list-container">
+            <iron-list id="list" items="{{hours}}" as="item">
+                <template>
+                    <div class="list-item" role="link" data-title$="{{item.name}}" data-code$="{{item.code}}" on-tap="itemTapHandler">
+                        <paper-ripple class="fit"></paper-ripple>
+                        <div class="content">
+                            <div class="library-info">
+                                <div class="library-name">
+                                    <a id="library-{{item.code}}" target="_blank" href="{{item.url}}" title="{{item.name}}">
+                                        {{item.name}}
+                                    </a>
+                                </div>
+                                <div class="library-hours">
+                                    <span>{{item.times}}</span>
+                                    <span class="notes" hidden$={{!item.notes}}>&mdash;<span>{{item.notes}}</span></span>
+                                </div>
+                            </div>
+                            <div class$="headline {{item.class}}" aria-label$="{{item.class}}">&bull;</div>
+                        </div>
                     </div>
-                    <div class$="{{item.class}}" aria-label$="{{item.class}}">&bull;</div>
-                  </div>
-                </li>
-          </template>
-          <!--</core-list>-->
-          </ul>
+                </template>
+            </iron-list>
         </div>
-        <!--<uqlibrary-persistent-footer id="persistentFooter">
-          <div class="footerButtons" layout horizontal end-justified>
-              <paper-button on-tap="{{viewHoursClicked}}"><a target="_blank" href="https://www.library.uq.edu.au/hours/">View hours for this week</a></paper-button>
-          </div>
-        </uqlibrary-persistent-footer>-->
-      </paper-header-panel>
-
-    </paper-drawer-panel>
-
-  </template>
-
-  <script>
-    Polymer({
-      // Accessibility issues fixes
-
-      is:'uqlibrary-hours',
-
-      properties: {
-        hours: {
-          type: Object,
-          observer: 'hoursChanged'
-
-        },
-        autoload: Boolean
-      },
-
-      hostAttributes: {
-        'class' : 'layout center'
-      },
-
-      keyboardNavigationKeys: 'space enter',
-
-      a11yKeyPressed: function(source, event) {
-        if (source.path && source.path.length > 0 && source.path[0].target) {
-          source.path[0].target.fire("tap");
-        }
-      },
-
-
-      /**
-       * The `hours` attribute contains information about hours
-       *
-       * @property hours
-       * @type Object
-       */
-      user: {},
-
-      ready: function() {
-        var that = this;
-
-        this.$.account.addEventListener('uqlibrary-api-account-loaded', function(e) {
-          if (e.detail.hasSession) {
-            that.user = e.detail;
-          }
-        });
-
-        this.$.hoursApi.addEventListener('uqlibrary-api-library-hours', function(e) {
-          that.hours = e.detail;
-        });
-        if(!!this.autoload){
-          this.$.account.get();
-          this.$.hoursApi.get();
-        }
-
-        this.actionButtons = {
-          footer: [
-            {title: 'View hours for this week', url: 'https://www.library.uq.edu.au/hours/', id: 'weekHours'}
-           ]
-        };
-
-        this.$.a11yToolBarLeftButton.target = this.$.toolBarLeftButton;
-      },
-
-      viewHoursClicked: function() {
-        this.$.ga.addEvent('Week hours button clicked');
-      },
-
-      hoursChanged: function() {
-        if(this.hours.length > 0 ) {
-          var dayString = moment().format('YYYY-MM-DD');
-          var _open, _close, _diff;
-          var _now = moment();
-          for(var i = 0; i < this.hours.length; i++) {
-            _open = moment(dayString+ ' ' + this.hours[i].open);
-            _close = moment(dayString+ ' ' + this.hours[i].close);
-            _diff = _close.diff(_open, 'hours');
-            this.hours[i].class = 'headline ';
-            if(_diff == 24) {
-              this.hours[i].times = 'Open 24 hours';
-              this.hours[i].class += 'open';
-            }
-            else if( _diff == 0) {
-              this.hours[i].times = 'Closed';
-              this.hours[i].class += 'closed';
-
-            }
-            else {
-              this.hours[i].times = _open.format("h:mm a") + ' - ' + _close.format("h:mm a");
-              this.hours[i].class += ((_open.isBefore(_now) && _close.isAfter(_now)) ? 'open' : 'closed');
-            }
-
-            if(this.hours[i].notes) {
-              this.hours[i].notes =  this.hours[i].notes.replace(/&amp;/g, '&').replace(/&ndash;/g, '-');
-            }
-
-          }
-        }
-        this.fire('uqlibrary-hours-loaded');
-      },
-
-      itemTapHandler: function(e, detail, sender) {
-        //this.$.ga.addEvent('Library details click', sender.getAttribute('data-title'));
-      }
-
-    });
-  </script>
-
+    </template>
+    <script src="uqlibrary-hours.js"></script>
 </dom-module>
