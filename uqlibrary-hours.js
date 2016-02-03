@@ -37,6 +37,9 @@
             this.$.ga.addEvent('Library details click', e.model.item.name);
             window.location = e.model.item.url;
         },
+        viewHoursClicked: function() {
+            this.$.ga.addEvent('Week hours button clicked');
+        },
         // Determines whether a library is open and formats the notes
         hoursChanged: function() {
             var self = this;

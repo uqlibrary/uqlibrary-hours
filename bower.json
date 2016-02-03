@@ -16,17 +16,14 @@
     "paper-drawer-panel": "PolymerElements/paper-drawer-panel#^1.0.1",
     "paper-header-panel": "PolymerElements/paper-header-panel#^1.0.1",
     "neon-animation": "PolymerElements/neon-animation#^1.0.0",
-    "uqlibrary-styles": "uqlibrary/uqlibrary-styles",
     "uqlibrary-ga": "uqlibrary/uqlibrary-ga#polymer1.0",
-    "test-fixture": "Polymer/test-fixture#^0.2.0"
+    "uqlibrary-styles": "uqlibrary/uqlibrary-styles"
   },
   "devDependencies": {
     "web-component-tester": "*",
     "test-fixture": "PolymerElements/test-fixture#^1.0.0"
   },
   "resolutions": {
-    "iron-elements": "^1.0.3",
-    "webcomponentsjs": "^0.7.20",
-    "test-fixture": "^1.0.0"
+    "iron-elements": "^1.0.3"
   }
 }
