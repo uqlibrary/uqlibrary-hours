@@ -27,7 +27,7 @@ git checkout --orphan gh-pages
 
 # Remove all non-relevant content
 git rm -rf .gitignore
-# git rm -rf bin
+git rm -rf bin
 git rm -rf test
 
 # Bower install
