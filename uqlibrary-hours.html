@@ -8,7 +8,10 @@
 `<uqlibrary-hours>` is a simple element that displays the opening hours for each of the libraries
 
 Example:
-      <uqlibrary-hours></uqlibrary-hours>
+
+    <uqlibrary-hours compact-view="false" auto-load="true"></uqlibrary-hours>
+
+@demo
 
 @demo demo/index.html Demo of the Full view
 @demo demo/index-compact.html Demo of the Compact view
@@ -21,7 +24,6 @@ Example:
         }
 
         .list-item {
-            border-bottom: 1px solid #ccc;
             padding-left: 16px;
             padding-right: 16px;
             cursor: pointer;
@@ -40,10 +42,7 @@ Example:
         }
 
         .headline {
-            font-family: "Roboto";
-            font-weight: 400;
             font-size: 1.8em;
-            line-height: 1.1em;
             color: rgba(0,0,0,87);
         }
         .headline.open, .headline.all-day { color: #38852e !important; }
@@ -65,7 +64,7 @@ Example:
             @apply(--layout-flex);
         }
 
-        .all-day {
+        paper-item.all-day {
             color: #64b10b;
         }
         
@@ -102,7 +101,7 @@ Example:
 
                         <!-- Full view -->
                         <template is="dom-if" if="{{!compactView}}">
-                            <div class="list-item" role="link" data-title$="{{item.name}}" data-code$="{{item.code}}" on-tap="_itemTapHandler">
+                            <div class="list-item border" role="link" data-title$="{{item.name}}" data-code$="{{item.code}}" on-tap="_itemTapHandler">
                                 <paper-ripple class="fit"></paper-ripple>
                                 <div class="content">
                                     <div class="library-info">
