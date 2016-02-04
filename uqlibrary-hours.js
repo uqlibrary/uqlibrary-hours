@@ -88,7 +88,7 @@
             });
 
             // Force iron-list to resize
-            $.list.fire("iron-resize");
+            this.$.list.fire("iron-resize");
 
             this.fire('uqlibrary-hours-loaded');
         }

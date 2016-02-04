@@ -1,0 +1,94 @@
+<!doctype html>
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <title>uql-ia-button</title>
+
+    <script src="../bower_components/webcomponentsjs/webcomponents.min.js"></script>
+    <script src="../bower_components/web-component-tester/browser.js"></script>
+    <script src="../bower_components/test-fixture/test-fixture-mocha.js"></script>
+    <link rel="import" href="../bower_components/test-fixture/test-fixture.html">
+
+    <!-- Import the element to test -->
+    <link rel="import" href="../uqlibrary-hours.html">
+
+</head>
+<body>
+
+<test-fixture id="hours">
+    <template>
+        <uqlibrary-hours auto-load="false" compact-view="true"></uqlibrary-hours>
+    </template>
+</test-fixture>
+
+<script>
+    var hours = [
+        {
+            "code": "arm",
+            "name": "Architecture / Music Library",
+            "abbr": "Arch Music",
+            "url": "http://www.library.uq.edu.au/locations/architecture-music-library",
+            "open": "09:00:00",
+            "close": "17:00:00",
+            "rev": "0"
+        },
+        {
+            "code": "bio",
+            "name": "Biological Sciences Library",
+            "abbr": "Biol Sci",
+            "url": "http://www.library.uq.edu.au/locations/biological-sciences-library",
+            "open": "00:00:00",
+            "close": "24:00:00",
+            "rev": "0",
+            "notes": "Walk in access from 7am to 8pm. Entry after 8pm UQ ID card necessary."
+        }
+    ];
+
+    suite('<uqlibrary-hours> Compact View tests', function () {
+        var element;
+
+        setup(function () {
+            element = fixture('hours');
+        });
+
+
+        test('It should load data', function (done) {
+            element.addEventListener('uqlibrary-hours-loaded', function(){
+                var _items = element.$.list.items;
+
+                // Check if the List has the right items
+                expect(_items.length).to.be.equal(element.hours.length);
+                expect(_items[0].name).to.be.equal(element.hours[0].name);
+
+                // Check opening hours functionality
+                var dayString = moment().format('YYYY-MM-DD');
+                var _open = moment(dayString+ ' ' + element.hours[0].open);
+                var _close = moment(dayString+ ' ' + element.hours[0].close);
+                var _now = moment();
+                expect(_items[0].times).to.be.equal(_open.format("h:mm a") + ' - ' + _close.format("h:mm a"));
+
+                expect(_items[0].class).to.be.equal( ((_open.isBefore(_now) && _close.isAfter(_now)) ? 'open' : 'closed') );
+
+                expect(_items[1].name).to.be.equal(element.hours[1].name);
+                expect(_items[1].class).to.be.equal('all-day');
+
+                done();
+            });
+
+            element.hours = hours;
+        });
+    });
+</script>
+
+</body>
+</html>
