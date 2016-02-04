@@ -63,7 +63,11 @@ Example:
         }
 
         /** Compact view styles */
-        .library-abbr, .library-status {
+        .library-abbr {
+            @apply(--layout-flex-2);
+            color: var(--accent-color);
+        }
+        .library-status {
             @apply(--layout-flex-2);
         }
 
@@ -81,7 +85,6 @@ Example:
     </style>
 
     <template>
-        <uqlibrary-api-account id="account"></uqlibrary-api-account>
         <uqlibrary-api-library-hours id="hoursApi"></uqlibrary-api-library-hours>
         <uqlibrary-ga id="ga" appName="Hours"></uqlibrary-ga>
 

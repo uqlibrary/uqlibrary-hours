@@ -27,15 +27,6 @@
         ready: function() {
             var self = this;
 
-            // Setup event listener for accounts
-            this.$.account.addEventListener('uqlibrary-api-account-loaded', function(e) {
-                if (e.detail.hasSession) {
-                    if(e.detail.classes) {
-                        self.user = e.detail;
-                    }
-                }
-            });
-
             // Setup event listener for Hours
             this.$.hoursApi.addEventListener('uqlibrary-api-library-hours', function(e) {
                 self.hours = e.detail;
