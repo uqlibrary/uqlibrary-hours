@@ -10,18 +10,14 @@
 Example:
       <uqlibrary-hours></uqlibrary-hours>
 
-@demo demo/index.html
+@demo demo/index.html Demo of the Full view
+@demo demo/index-compact.html Demo of the Compact view
 -->
 <dom-module id="uqlibrary-hours">
 
     <style is="custom-style" include="common-styles">
         :host {
             font-family: var(--font-family);
-        }
-
-        .list-container {
-            padding-left: 0px;
-            overflow: visible;
         }
 
         .list-item {
@@ -50,21 +46,31 @@ Example:
             line-height: 1.1em;
             color: rgba(0,0,0,87);
         }
-
-        .headline.open {
-            color: #38852e !important;
-        }
-
-        .headline.closed {
-            color: #ce4627 !important;
-        }
+        .headline.open, .headline.all-day { color: #38852e !important; }
+        .headline.closed { color: #ce4627 !important; }
 
         .notes {
             color: rgba(0, 0, 0, 0.54);
         }
 
+        .border {
+            border-bottom: 1px solid #ccc;
+        }
+
         .week-hours {
             padding: 10px;
+        }
+
+        .library-abbr, .library-status, .library-allday {
+            @apply(--layout-flex);
+        }
+
+        .all-day {
+            color: #64b10b;
+        }
+        
+        .library-allday iron-icon {
+            vertical-align: text-bottom;
         }
     </style>
 
@@ -73,36 +79,59 @@ Example:
         <uqlibrary-api-library-hours id="hoursApi"></uqlibrary-api-library-hours>
         <uqlibrary-ga id="ga" appName="Hours"></uqlibrary-ga>
 
+
+
         <div class="list-container">
             <iron-list id="list" items="{{hours}}" as="item">
                 <template>
-                    <div class="list-item" role="link" data-title$="{{item.name}}" data-code$="{{item.code}}" on-tap="itemTapHandler">
-                        <paper-ripple class="fit"></paper-ripple>
-                        <div class="content">
-                            <div class="library-info">
-                                <div class="library-name">
-                                    <a id="library-{{item.code}}" target="_blank" href="{{item.url}}" title="{{item.name}}">
-                                        {{item.name}}
-                                    </a>
+                    <div>
+                        <!-- Compact view -->
+                        <template is="dom-if" if="{{compactView}}">
+                            <paper-item class$="border {{item.class}}">
+                                <div class="library-abbr">
+                                    <a href="{{item.url}}">{{ item.abbr }}</a>
                                 </div>
-                                <div class="library-hours">
-                                    <span>{{item.times}}</span>
-                                    <span class="notes" hidden$={{!item.notes}}>&mdash;<span>{{item.notes}}</span></span>
+                                <div class="library-status">
+                                    {{ item.times }}
+                                </div>
+                                <div class="library-allday">
+                                    <iron-icon icon="device:access-time"></iron-icon>24x7
+                                </div>
+                            </paper-item>
+                        </template>
+
+                        <!-- Full view -->
+                        <template is="dom-if" if="{{!compactView}}">
+                            <div class="list-item" role="link" data-title$="{{item.name}}" data-code$="{{item.code}}" on-tap="_itemTapHandler">
+                                <paper-ripple class="fit"></paper-ripple>
+                                <div class="content">
+                                    <div class="library-info">
+                                        <div class="library-name">
+                                            <a id="library-{{item.code}}" target="_blank" href="{{item.url}}" title="{{item.name}}">
+                                                {{item.name}}
+                                            </a>
+                                        </div>
+                                        <div class="library-hours">
+                                            <span>{{item.times}}</span>
+                                            <span class="notes" hidden$={{!item.notes}}>&mdash;<span>{{item.notes}}</span></span>
+                                        </div>
+                                    </div>
+                                    <div class$="headline {{item.class}}" aria-label$="{{item.class}}">&bull;</div>
                                 </div>
                             </div>
-                            <div class$="headline {{item.class}}" aria-label$="{{item.class}}">&bull;</div>
-                        </div>
+                        </template>
                     </div>
                 </template>
             </iron-list>
-            <div class="horizontal end-justified layout week-hours">
+            <div class="horizontal end-justified layout week-hours" hidden$="{{compactView}}">
                 <div>
-                    <paper-button class="button-theme" on-tap="viewHoursClicked">
+                    <paper-button class="button-theme" on-tap="_viewHoursClicked">
                         <a target="_blank" href="https://www.library.uq.edu.au/hours/">View hours for this week</a>
                     </paper-button>
                 </div>
             </div>
         </div>
+
     </template>
     <script src="uqlibrary-hours.js"></script>
 </dom-module>

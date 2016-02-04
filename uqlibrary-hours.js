@@ -2,13 +2,26 @@
     Polymer({
         is: 'uqlibrary-hours',
         properties: {
+            /** Opening hours of all libraries in JSON format */
             hours: {
                 type: Array,
-                observer: "hoursChanged"
+                observer: "_hoursChanged"
             },
-            autoload: {
-                type: Object, // Needs to be object so the string 'false' can be serialized
+            /**
+             * Autoloads the library opening hours from the API
+             * @type {Boolean}
+             */
+            autoLoad: {
+                type: Object,
                 value: true
+            },
+            /**
+             * Renders the element in compact view
+             * @type {Boolean}
+             */
+            compactView: {
+                type: Object,
+                value: false
             }
         },
         ready: function() {
@@ -29,19 +42,21 @@
             });
 
             // Fetch hours
-            if (this.autoload) {
+            if (this.autoLoad) {
                 this.$.hoursApi.get();
             }
         },
-        itemTapHandler: function(e) {
+        /** Redirects the user to the selected Library page */
+        _itemTapHandler: function(e) {
             this.$.ga.addEvent('Library details click', e.model.item.name);
             window.location = e.model.item.url;
         },
-        viewHoursClicked: function() {
+        /** Adds GA event */
+        _viewHoursClicked: function() {
             this.$.ga.addEvent('Week hours button clicked');
         },
-        // Determines whether a library is open and formats the notes
-        hoursChanged: function() {
+        /** Parses and formats the JSON array when hours has updated */
+        _hoursChanged: function() {
             var self = this;
 
             var dayString = moment().format("YYYY-MM-DD");
@@ -51,10 +66,13 @@
                 _close = moment(dayString + ' ' + item.close);
                 _diff = _close.diff(_open, 'hours');
 
+                item.allDay = false;
+
                 // Format the opening text
                 if (_diff == 24) {
                     item.times = "Open 24 hours";
-                    item.class = "open";
+                    item.class = "all-day";
+                    item.allDay = true;
                 } else if (_diff == 0) {
                     item.times = "Closed";
                     item.class = "closed";
@@ -68,6 +86,9 @@
                     item.notes = item.notes.replace(/&amp;/g, '&').replace(/&ndash;/g, '-');
                 }
             });
+
+            // Force iron-list to resize
+            $.list.fire("iron-resize");
 
             this.fire('uqlibrary-hours-loaded');
         }
