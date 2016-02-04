@@ -23,51 +23,58 @@ Example:
             font-family: var(--font-family);
         }
 
-        .list-item {
-            padding-left: 16px;
-            padding-right: 16px;
-            cursor: pointer;
+        /** Shared styles */
+        paper-ripple {
+            @apply(--layout-fit);
         }
 
-        .content {
-            @apply(--layout-horizontal);
-            overflow: hidden;
-            text-overflow: ellipsis;
-            padding-top: 10px;
+        paper-item {
+            cursor: pointer;
+            border: 1px solid var(--border-color);
             height: 70px;
         }
 
+        /** Full view styles */
         .library-info {
             @apply(--layout-flex);
         }
 
+        .library-name {
+            color: var(--accent-color);
+        }
+
         .headline {
             font-size: 1.8em;
-            color: rgba(0,0,0,87);
+            color: var(--secondary-color-dark);
         }
-        .headline.open, .headline.all-day { color: #38852e !important; }
-        .headline.closed { color: #ce4627 !important; }
+        .headline.open, .headline.all-day {
+            color: var(--available-color) !important;
+        }
+        .headline.closed {
+            color: var(--unavailable-color) !important;
+        }
 
         .notes {
-            color: rgba(0, 0, 0, 0.54);
-        }
-
-        .border {
-            border-bottom: 1px solid #ccc;
+            color: var(--secondary-color);
         }
 
         .week-hours {
             padding: 10px;
         }
 
-        .library-abbr, .library-status, .library-allday {
+        /** Compact view styles */
+        .library-abbr, .library-status {
+            @apply(--layout-flex-2);
+        }
+
+        .library-allday {
             @apply(--layout-flex);
         }
 
         paper-item.all-day {
-            color: #64b10b;
+            color: var(--available-color);
         }
-        
+
         .library-allday iron-icon {
             vertical-align: text-bottom;
         }
@@ -78,56 +85,56 @@ Example:
         <uqlibrary-api-library-hours id="hoursApi"></uqlibrary-api-library-hours>
         <uqlibrary-ga id="ga" appName="Hours"></uqlibrary-ga>
 
+        <iron-list id="list" items="{{hours}}" as="item">
+            <template>
+                <div>
+                    <!-- Compact view -->
+                    <template is="dom-if" if="{{compactView}}">
+                        <paper-item class$="border {{item.class}}"
+                                    role="link"
+                                    title$="{{item.name}}"
+                                    on-tap="_itemTapHandler">
+                            <paper-ripple></paper-ripple>
+                            <div class="library-abbr">
+                                {{ item.abbr }}
+                            </div>
+                            <div class="library-status">
+                                {{ item.times }}
+                            </div>
+                            <div class="library-allday">
+                            <span hidden$="{{!item.allDay}}">
+                                <iron-icon icon="device:access-time"></iron-icon> 24x7
+                            </span>
+                            </div>
+                        </paper-item>
+                    </template>
 
-
-        <div class="list-container">
-            <iron-list id="list" items="{{hours}}" as="item">
-                <template>
-                    <div>
-                        <!-- Compact view -->
-                        <template is="dom-if" if="{{compactView}}">
-                            <paper-item class$="border {{item.class}}">
-                                <div class="library-abbr">
-                                    <a href="{{item.url}}">{{ item.abbr }}</a>
-                                </div>
-                                <div class="library-status">
-                                    {{ item.times }}
-                                </div>
-                                <div class="library-allday">
-                                    <iron-icon icon="device:access-time"></iron-icon>24x7
-                                </div>
-                            </paper-item>
-                        </template>
-
-                        <!-- Full view -->
-                        <template is="dom-if" if="{{!compactView}}">
-                            <div class="list-item border" role="link" data-title$="{{item.name}}" data-code$="{{item.code}}" on-tap="_itemTapHandler">
-                                <paper-ripple class="fit"></paper-ripple>
-                                <div class="content">
-                                    <div class="library-info">
-                                        <div class="library-name">
-                                            <a id="library-{{item.code}}" target="_blank" href="{{item.url}}" title="{{item.name}}">
-                                                {{item.name}}
-                                            </a>
-                                        </div>
-                                        <div class="library-hours">
-                                            <span>{{item.times}}</span>
-                                            <span class="notes" hidden$={{!item.notes}}>&mdash;<span>{{item.notes}}</span></span>
-                                        </div>
-                                    </div>
-                                    <div class$="headline {{item.class}}" aria-label$="{{item.class}}">&bull;</div>
+                    <!-- Full view -->
+                    <template is="dom-if" if="{{!compactView}}">
+                        <paper-item
+                                role="link"
+                                title$="{{item.name}}"
+                                on-tap="_itemTapHandler">
+                            <paper-ripple></paper-ripple>
+                            <div class="library-info">
+                                <div class="library-name">{{item.name}}</div>
+                                <div class="library-hours">
+                                    {{item.times}}
+                                    <span class="notes" hidden$="{{!item.notes}}"> &mdash; {{item.notes}}</span>
                                 </div>
                             </div>
-                        </template>
-                    </div>
-                </template>
-            </iron-list>
-            <div class="horizontal end-justified layout week-hours" hidden$="{{compactView}}">
-                <div>
-                    <paper-button class="button-theme" on-tap="_viewHoursClicked">
-                        <a target="_blank" href="https://www.library.uq.edu.au/hours/">View hours for this week</a>
-                    </paper-button>
+                            <div class$="headline {{item.class}}" aria-label$="{{item.class}}">&bull;</div>
+                        </paper-item>
+                    </template>
                 </div>
+            </template>
+        </iron-list>
+
+        <div class="horizontal end-justified layout week-hours" hidden$="{{compactView}}">
+            <div>
+                <paper-button class="button-theme" on-tap="_viewHoursClicked">
+                    <a target="_blank" href="https://www.library.uq.edu.au/hours/">View hours for this week</a>
+                </paper-button>
             </div>
         </div>
 
