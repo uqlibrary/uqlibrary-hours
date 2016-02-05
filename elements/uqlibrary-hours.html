@@ -88,50 +88,48 @@ Example:
         <uqlibrary-api-library-hours id="hoursApi"></uqlibrary-api-library-hours>
         <uqlibrary-ga id="ga" appName="Hours"></uqlibrary-ga>
 
-        <iron-list id="list" items="{{hours}}" as="item">
-            <template>
-                <div>
-                    <!-- Compact view -->
-                    <template is="dom-if" if="{{compactView}}">
-                        <paper-item class$="border {{item.class}}"
-                                    role="link"
-                                    title$="{{item.name}}"
-                                    on-tap="_itemTapHandler">
-                            <paper-ripple></paper-ripple>
-                            <div class="library-abbr">
-                                {{ item.abbr }}
-                            </div>
-                            <div class="library-status">
-                                {{ item.times }}
-                            </div>
-                            <div class="library-allday">
-                            <span hidden$="{{!item.allDay}}">
-                                <iron-icon icon="device:access-time"></iron-icon> 24x7
-                            </span>
-                            </div>
-                        </paper-item>
-                    </template>
-
-                    <!-- Full view -->
-                    <template is="dom-if" if="{{!compactView}}">
-                        <paper-item
+        <template id="list" is="dom-repeat" items="{{hours}}">
+            <div>
+                <!-- Compact view -->
+                <template is="dom-if" if="{{compactView}}">
+                    <paper-item class$="border {{item.class}}"
                                 role="link"
                                 title$="{{item.name}}"
                                 on-tap="_itemTapHandler">
-                            <paper-ripple></paper-ripple>
-                            <div class="library-info">
-                                <div class="library-name">{{item.name}}</div>
-                                <div class="library-hours">
-                                    {{item.times}}
-                                    <span class="notes" hidden$="{{!item.notes}}"> &mdash; {{item.notes}}</span>
-                                </div>
+                        <paper-ripple></paper-ripple>
+                        <div class="library-abbr">
+                            {{ item.abbr }}
+                        </div>
+                        <div class="library-status">
+                            {{ item.times }}
+                        </div>
+                        <div class="library-allday">
+                        <span hidden$="{{!item.allDay}}">
+                            <iron-icon icon="device:access-time"></iron-icon> 24x7
+                        </span>
+                        </div>
+                    </paper-item>
+                </template>
+
+                <!-- Full view -->
+                <template is="dom-if" if="{{!compactView}}">
+                    <paper-item
+                            role="link"
+                            title$="{{item.name}}"
+                            on-tap="_itemTapHandler">
+                        <paper-ripple></paper-ripple>
+                        <div class="library-info">
+                            <div class="library-name">{{item.name}}</div>
+                            <div class="library-hours">
+                                {{item.times}}
+                                <span class="notes" hidden$="{{!item.notes}}"> &mdash; {{item.notes}}</span>
                             </div>
-                            <div class$="headline {{item.class}}" aria-label$="{{item.class}}">&bull;</div>
-                        </paper-item>
-                    </template>
-                </div>
-            </template>
-        </iron-list>
+                        </div>
+                        <div class$="headline {{item.class}}" aria-label$="{{item.class}}">&bull;</div>
+                    </paper-item>
+                </template>
+            </div>
+        </template>
 
         <div class="horizontal end-justified layout week-hours" hidden$="{{compactView}}">
             <div>
