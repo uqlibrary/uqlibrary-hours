@@ -59,6 +59,9 @@
 
                 item.allDay = false;
 
+                // Fix formatting of the library name
+                item.name = item.name.replace(/&amp;/g, '&').replace(/&ndash;/g, '-');
+
                 // Format the opening text
                 if (_diff == 24) {
                     item.times = "Open 24 hours";
