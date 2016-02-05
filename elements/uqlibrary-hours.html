@@ -19,15 +19,31 @@ Example:
             font-family: var(--font-family);
         }
 
-        /** Shared styles */
         paper-ripple {
             @apply(--layout-fit);
         }
 
         paper-item {
             cursor: pointer;
-            border: 1px solid var(--border-color);
-            height: 70px;
+            border-color: var(--border-color);
+            border-width: 0 0 1px 0;
+            border-style: solid;
+
+            min-height: 70px;
+        }
+
+        paper-item.compact {
+            min-height: 30px;
+            /*font-size: 14px;*/
+            font-size: 0.85em;
+        }
+
+        paper-item.compact:nth-child(even) {
+            background-color: #fbfbfb;
+        }
+
+        paper-item.compact:last-of-type {
+            border: none;
         }
 
         /** Full view styles */
@@ -39,14 +55,17 @@ Example:
             color: var(--accent-color);
         }
 
-        .headline {
-            font-size: 1.8em;
-            color: var(--secondary-color-dark);
+        .status {
+            padding: 5px;
+            font-size: 2em;
         }
-        .headline.open, .headline.all-day {
+
+        .open,
+        .all-day {
             color: var(--available-color);
         }
-        .headline.closed {
+
+        .closed {
             color: var(--unavailable-color);
         }
 
@@ -85,10 +104,10 @@ Example:
         <uqlibrary-ga id="ga" appName="Hours"></uqlibrary-ga>
 
         <template id="list" is="dom-repeat" items="{{hours}}">
-            <div>
+            <!--<div>-->
                 <!-- Compact view -->
                 <template is="dom-if" if="{{compactView}}">
-                    <paper-item class$="border {{item.class}}"
+                    <paper-item class$="compact {{item.class}}"
                                 role="link"
                                 title$="{{item.name}}"
                                 on-tap="_itemTapHandler">
@@ -121,10 +140,10 @@ Example:
                                 <span class="notes" hidden$="{{!item.notes}}"> &mdash; {{item.notes}}</span>
                             </div>
                         </div>
-                        <div class$="headline {{item.class}}" aria-label$="{{item.class}}">&bull;</div>
+                        <div class$="status {{item.class}}" aria-label$="{{item.class}}">&bull;</div>
                     </paper-item>
                 </template>
-            </div>
+            <!--</div>-->
         </template>
 
         <div class="horizontal end-justified layout week-hours" hidden$="{{compactView}}">
