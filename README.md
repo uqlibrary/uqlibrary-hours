@@ -1,6 +1,8 @@
 # uqlibrary-hours
 
-uqlibrary-hours is a simple list view showing opening hours for all libraries at the University of Queensland. 
+uqlibrary-hours is a simple list view showing opening hours for all libraries at the University of Queensland.
+
+Full documentation can be found at [GitHub Pages](http://uqlibrary.github.io/uqlibrary-hours).
 
 ### Getting Started
 Install Node.JS and run the following oneliner in the project directory:
