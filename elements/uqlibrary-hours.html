@@ -104,6 +104,7 @@ Example:
                 <template is="dom-if" if="{{compactView}}">
                     <paper-item class$="compact {{item.class}}"
                                 role="link"
+                                aria-label$="{{item.name}}"
                                 title$="{{item.name}}"
                                 on-tap="_itemTapHandler">
                         <paper-ripple></paper-ripple>
@@ -126,6 +127,7 @@ Example:
                     <paper-item
                             role="link"
                             title$="{{item.name}}"
+                            aria-label$="{{item.name}}"
                             on-tap="_itemTapHandler">
                         <paper-ripple></paper-ripple>
                         <div class="library-info">
