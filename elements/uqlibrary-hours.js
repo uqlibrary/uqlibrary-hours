@@ -29,13 +29,20 @@
 
             // Setup event listener for Hours
             this.$.hoursApi.addEventListener('uqlibrary-api-library-hours', function(e) {
-                self.hours = e.detail;
+                self.setHours(e.detail);
             });
 
             // Fetch hours
             if (this.autoLoad) {
                 this.$.hoursApi.get();
             }
+        },
+        /**
+         * Sorts and sets the "hours" variable
+         * @param hours
+         */
+        setHours: function (hours) {
+          this.hours = _.sortBy(hours, "name");
         },
         /** Redirects the user to the selected Library page */
         _itemTapHandler: function(e) {
