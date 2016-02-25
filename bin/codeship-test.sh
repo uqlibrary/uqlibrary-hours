@@ -1,8 +1,11 @@
 #!/bin/bash
 
+echo "Deploying branch: ${CI_BRANCH}"
+
 # If polymer 1.0
 if [ ${CI_BRANCH} == "polymer1.0" ]; then
     # Run local tests
+    echo "Starting local WCT tests"
     npm install web-component-tester
     wct
 else
