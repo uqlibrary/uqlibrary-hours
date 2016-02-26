@@ -8,6 +8,7 @@ echo "Deploying branch: ${CI_BRANCH}"
 if [ ${CI_BRANCH} == "polymer1.0" ]; then
 
     if [ ${PIPE_NUM} == 1 ]; then
+        npm install -g web-component-tester
         echo "Bower Install"
         bower install
         npm install web-component-tester
