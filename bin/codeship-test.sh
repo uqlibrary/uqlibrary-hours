@@ -10,8 +10,6 @@ if [ ${CI_BRANCH} == "polymer1.0" ]; then
     if [ ${PIPE_NUM} == 1 ]; then
         # Run local tests
         echo "Starting local WCT tests"
-        npm install web-component-tester -g
-        npm install web-component-tester
         bower install
         wct
     else
