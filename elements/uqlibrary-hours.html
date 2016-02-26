@@ -25,9 +25,8 @@ Example:
 
         paper-item {
             cursor: pointer;
-            border-color: var(--border-color);
-            border-width: 0 0 1px 0;
-            border-style: dashed;
+            border-bottom: 1px solid var(--border-color);
+            padding-left: 16px;
 
             min-height: 70px;
         }
@@ -35,6 +34,16 @@ Example:
         paper-item.compact {
             min-height: 30px;
             font-size: 0.85em;
+        }
+
+        paper-item.compact.header {
+            display: block;
+            text-align: center;
+            line-height: 30px;
+            min-height: 30px;
+            font-size: 16px;
+            background-color: var(--accent-color);
+            color: #FFF;
         }
 
         paper-item.compact:last-of-type {
@@ -97,6 +106,10 @@ Example:
     <template>
         <uqlibrary-api-library-hours id="hoursApi"></uqlibrary-api-library-hours>
         <uqlibrary-ga id="ga" appName="Hours"></uqlibrary-ga>
+
+        <template is="dom-if" if="{{compactView}}">
+            <paper-item class="compact header" tabindex="0">Opening Hours</paper-item>
+        </template>
 
         <template id="list" is="dom-repeat" items="{{hours}}">
             <!-- Compact view -->

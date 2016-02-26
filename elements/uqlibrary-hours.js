@@ -42,7 +42,7 @@
          * @param hours
          */
         setHours: function (hours) {
-          this.hours = _.sortBy(hours, "name");
+          this.hours = _.sortBy(hours, (this.compactView ? "abbr" : "name"));
         },
         /** Redirects the user to the selected Library page */
         _itemTapHandler: function(e) {
