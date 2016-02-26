@@ -21,6 +21,6 @@ else
     # make sure wct-sauce plugin works with old version of wct
     cd ../uqlibrary-elements
     ./bin/elements_local_tests.sh
-    cd ../uqlibrary-computers
+    cd ../uqlibrary-hours
     ../uqlibrary-elements/bin/sauce.sh
 fi
