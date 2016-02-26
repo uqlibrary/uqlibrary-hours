@@ -14,7 +14,7 @@ if [ ${CI_BRANCH} == "polymer1.0" ]; then
         echo "Bower Install"
         bower install
         echo "Running tests"
-        wct
+        wct --verbose
     else
         echo "Pipe not used"
     fi
