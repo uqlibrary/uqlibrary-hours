@@ -108,7 +108,7 @@ Example:
         <uqlibrary-ga id="ga" appName="Hours"></uqlibrary-ga>
 
         <template is="dom-if" if="{{compactView}}">
-            <paper-item class="compact header" tabindex="0">Opening Hours</paper-item>
+            <paper-item class="compact header" tabindex="-1">Opening Hours</paper-item>
         </template>
 
         <template id="list" is="dom-repeat" items="{{hours}}">
