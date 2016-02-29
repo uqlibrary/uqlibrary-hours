@@ -80,7 +80,7 @@ Example:
             @apply(--layout-flex);
         }
 
-        paper-item.all-day {
+        paper-item.all-day span {
             color: var(--available-color);
         }
 
@@ -106,16 +106,16 @@ Example:
                             title$="{{item.name}}"
                             on-tap="_itemTapHandler">
                     <paper-ripple></paper-ripple>
-                    <div class="library-abbr">
+                    <div class="library-abbr body1">
                         {{ item.abbr }}
                     </div>
-                    <div class="library-status">
+                    <div class="library-status body1">
                         {{ item.times }}
                     </div>
-                    <div class="library-allday">
-                    <span hidden$="{{!item.allDay}}">
-                        <iron-icon icon="device:access-time"></iron-icon> 24x7
-                    </span>
+                    <div class="library-allday body1">
+                        <span hidden$="{{!item.allDay}}">
+                            <iron-icon icon="device:access-time"></iron-icon> 24x7
+                        </span>
                     </div>
                 </paper-item>
             </template>
@@ -129,8 +129,8 @@ Example:
                         on-tap="_itemTapHandler">
                     <paper-ripple></paper-ripple>
                     <div class="library-info">
-                        <div class="library-name">{{item.name}}</div>
-                        <div class="library-hours">
+                        <div class="library-name body1">{{item.name}}</div>
+                        <div class="library-hours body1">
                             {{item.times}}
                             <span class="notes" hidden$="{{!item.notes}}"> &mdash; {{item.notes}}</span>
                         </div>
