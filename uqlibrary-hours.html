@@ -1,0 +1,186 @@
+<!--
+Element providing an overview for current libraries working hours
+
+##### Example
+
+    <uqlibrary-hours></uqlibrary-hours>
+
+    <script>
+    (function () {
+
+      window.addEventListener('polymer-ready', function() {
+
+        var hours = document.querySelector('uqlibrary-hours');
+
+        hours.hours = [
+
+          ];
+      });
+    }());
+  </script>
+
+@element uqlibrary-hours
+@blurb Element providing an overview for current libraries working hours
+@status alpha
+@homepage http://uqlibrary.github.io/uqlibrary-hours
+-->
+
+<link rel="import" href="../uqlibrary-elements/0.5.5/lib/vulcanized.html">
+
+<polymer-element name="uqlibrary-hours" layout center attributes="hours autoload">
+  <template>
+    <link rel="stylesheet" href="../uqlibrary-elements/resources/theme/element.css">
+    <link rel="stylesheet" href="uqlibrary-hours.css">
+
+    <uqlibrary-api-account id="account"></uqlibrary-api-account>
+    <uqlibrary-api-library-hours id="hoursApi"></uqlibrary-api-library-hours>
+    <uqlibrary-ga id="ga" appName="Hours"></uqlibrary-ga>
+
+    <core-drawer-panel id="drawerPanel" class="drawer" drawerWidth="256px" responsiveWidth="768px">
+      <core-header-panel drawer>
+        <uqlibrary-menu account="{{user}}"></uqlibrary-menu>
+      </core-header-panel>
+
+      <core-header-panel main class="main">
+        <core-toolbar>
+
+          <core-a11y-keys id="a11yToolBarLeftButton" target="{{$.toolBarLeftButton}}" keys="{{keyboardNavigationKeys}}"
+                          on-keys-pressed="{{ a11yKeyPressed }}"></core-a11y-keys>
+          <paper-icon-button id="toolBarLeftButton" icon="menu" core-drawer-toggle></paper-icon-button>
+          <h1 flex id="toolbar-page-title">Library hours</h1>
+
+        </core-toolbar>
+        <div id="content" class="body-footer-container">
+          <ul class="three-line-text-list">
+            <li class="gap"></li>
+            <core-list id="list" data="{{hours}}" fit class="list-margin">
+              <template>
+
+                <li class="list-item border" role="link" data-title="{{model.name}}" data-code="{{model.code}}" on-tap="{{itemTapHandler}}">
+                    <div class="content" layout horizontal>
+                    <div flex>
+                      <div class="line1">
+                        <a id="library-{{model.code}}" target="_blank" href="{{model.url}}" title="{{model.name}}">
+                          <paper-ripple fit></paper-ripple>
+                          {{model.name}}
+                        </a>
+                      </div>
+                      <div class="text">
+                        <span class="body1">{{model.times}}</span>
+                        <span hidden?={{!model.notes}}>&mdash; {{model.notes}}</span>
+                      </div>
+                    </div>
+                    <div class="headline {{model.class}}" aria-label="library {{model.class}}">&bull;</div>
+                  </div>
+                </li>
+          </template>
+          </core-list>
+          </ul>
+        </div>
+        <uqlibrary-persistent-footer id="persistentFooter">
+          <div class="footerButtons" layout horizontal end-justified>
+              <paper-button on-tap="{{viewHoursClicked}}"><a target="_blank" href="https://www.library.uq.edu.au/hours/">View hours for this week</a></paper-button>
+          </div>
+        </uqlibrary-persistent-footer>
+      </core-header-panel>
+
+    </core-drawer-panel>
+
+  </template>
+
+  <script>
+    Polymer('uqlibrary-hours', {
+      // Accessibility issues fixes
+
+      keyboardNavigationKeys: 'space enter',
+
+      a11yKeyPressed: function(source, event) {
+        if (source.path && source.path.length > 0 && source.path[0].target) {
+          source.path[0].target.fire("tap");
+        }
+      },
+
+
+      /**
+       * The `hours` attribute contains information about hours
+       *
+       * @property hours
+       * @type Object
+       */
+
+      publish: {
+        hours: null,
+        autoload: true
+      },
+      user: {},
+
+      ready: function() {
+        var that = this;
+
+        this.$.account.addEventListener('uqlibrary-api-account-loaded', function(e) {
+          if (e.detail.hasSession) {
+            if(e.detail.classes) {
+              that.user = e.detail;
+            }
+          }
+        });
+
+        this.$.hoursApi.addEventListener('uqlibrary-api-library-hours', function(e) {
+          that.hours = e.detail;
+        });
+        if(this.autoload){
+          this.$.account.get();
+          this.$.hoursApi.get();
+        }
+
+        this.actionButtons = {
+          footer: [
+            {title: 'View hours for this week', url: 'https://www.library.uq.edu.au/hours/', id: 'weekHours'}
+           ]
+        };
+      },
+
+      viewHoursClicked: function() {
+        this.$.ga.addEvent('Week hours button clicked');
+      },
+
+      hoursChanged: function() {
+        if(this.hours.length > 0 ) {
+          var dayString = moment().format('YYYY-MM-DD');
+          var _open, _close, _diff;
+          var _now = moment();
+          for(var i = 0; i < this.hours.length; i++) {
+            _open = moment(dayString+ ' ' + this.hours[i].open);
+            _close = moment(dayString+ ' ' + this.hours[i].close);
+            _diff = _close.diff(_open, 'hours');
+            if(_diff == 24) {
+              this.hours[i].times = 'Open 24 hours';
+              this.hours[i].class = 'open';
+            }
+            else if( _diff == 0) {
+              this.hours[i].times = 'Closed';
+              this.hours[i].class = 'closed';
+
+            }
+            else {
+              this.hours[i].times = _open.format("h:mm a") + ' - ' + _close.format("h:mm a");
+              this.hours[i].class = ((_open.isBefore(_now) && _close.isAfter(_now)) ? 'open' : 'closed');
+            }
+
+            if(this.hours[i].notes) {
+              this.hours[i].notes =  this.hours[i].notes.replace(/&amp;/g, '&').replace(/&ndash;/g, '-');
+            }
+
+          }
+        }
+        this.fire('uqlibrary-hours-loaded');
+      },
+
+      itemTapHandler: function(e, detail, sender) {
+        this.$.ga.addEvent('Library details click', sender.getAttribute('data-title'));
+      }
+
+    });
+  </script>
+
+</polymer-element>
