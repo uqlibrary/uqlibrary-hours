@@ -71,7 +71,7 @@
 
                 // Format the opening text
                 if (_diff == 24) {
-                    item.times = "Open 24 hours";
+                    item.times = "open 24 hours";
                     item.class = "all-day";
                     item.allDay = true;
                 } else if (_diff == 0) {

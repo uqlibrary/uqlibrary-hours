@@ -50,12 +50,11 @@ Example:
             font-size: 2em;
         }
 
-        .open,
-        .all-day {
+        .all-day .library-status {
             color: var(--available-color);
         }
 
-        .closed {
+        .closed .library-status {
             color: var(--unavailable-color);
         }
 
@@ -106,10 +105,10 @@ Example:
                             title$="{{item.name}}"
                             on-tap="_itemTapHandler">
                     <paper-ripple></paper-ripple>
-                    <div class="library-abbr body1">
+                    <div class="body1 library-abbr">
                         {{ item.abbr }}
                     </div>
-                    <div class="library-status body1">
+                    <div class="body1 library-status">
                         {{ item.times }}
                     </div>
                     <div class="library-allday body1">
