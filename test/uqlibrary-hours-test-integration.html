@@ -46,7 +46,7 @@
               expect(_items[0].class).to.be.equal( ((_open.isBefore(_now) && _close.isAfter(_now)) ? 'open' : 'closed') );
 
               expect(_items[1].name).to.be.equal(hoursEl.hours[1].name);
-              expect(_items[1].times).to.be.equal('Open 24 hours');
+              expect(_items[1].times).to.be.equal('open 24 hours');
               done();
               
             }, 2000);
