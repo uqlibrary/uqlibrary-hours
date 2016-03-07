@@ -61,12 +61,12 @@
         },
         /** Redirects the user to the selected Library page */
         _itemTapHandler: function(e) {
-            this.$.ga.addEvent('Library details click', e.model.item.name);
+            this.$.ga.addEvent('Click', e.model.item.name);
             window.location = e.model.item.url;
         },
         /** Adds GA event */
-        _viewHoursClicked: function() {
-            this.$.ga.addEvent('Week hours button clicked');
+        _viewHoursClicked: function(e) {
+            this.$.ga.addEvent('Click', 'View all hours');
         },
         /** Parses and formats the JSON array when hours has updated */
         _hoursChanged: function() {
@@ -114,6 +114,6 @@
          */
         _gaCategoryPrefixChanged: function () {
             this._gaAppName = (this.gaCategoryPrefix ? this.gaCategoryPrefix + ' Hours' : 'Hours');
-        },
+        }
     });
 })();
