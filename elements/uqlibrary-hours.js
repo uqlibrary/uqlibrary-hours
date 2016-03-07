@@ -22,6 +22,21 @@
             compactView: {
                 type: Object,
                 value: false
+            },
+            /**
+             * Prefix for the google analytics category name. For example: "Home page"
+             */
+            gaCategoryPrefix: {
+                type: String,
+                value: '',
+                observer: '_gaCategoryPrefixChanged'
+            },
+            /**
+             * Holds the Google Analytics app name of this component
+             */
+            _gaAppName: {
+                type: String,
+                value: ''
             }
         },
         ready: function() {
@@ -92,6 +107,13 @@
             this.$.list.fire("iron-resize");
 
             this.fire('uqlibrary-hours-loaded');
-        }
+        },
+        /**
+         * Sets the Google Analytics app name
+         * @private
+         */
+        _gaCategoryPrefixChanged: function () {
+            this._gaAppName = (this.gaCategoryPrefix ? this.gaCategoryPrefix + ' Hours' : 'Hours');
+        },
     });
 })();

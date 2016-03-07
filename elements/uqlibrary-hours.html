@@ -90,7 +90,7 @@ Example:
 
     <template>
         <uqlibrary-api-library-hours id="hoursApi"></uqlibrary-api-library-hours>
-        <uqlibrary-ga id="ga" appName="Hours"></uqlibrary-ga>
+        <uqlibrary-ga id="ga" app-name="[[_gaAppName]]"></uqlibrary-ga>
 
         <template is="dom-if" if="{{compactView}}">
             <paper-item class="compact header" tabindex="-1">Opening Hours</paper-item>
