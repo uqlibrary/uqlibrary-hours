@@ -11,63 +11,53 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <html>
 <head>
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-    <title>uql-ia-button</title>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <title>uqlibrary-hours integration test</title>
 
-    <script src="../bower_components/webcomponentsjs/webcomponents.min.js"></script>
-    <script src="../bower_components/web-component-tester/browser.js"></script>
-    <script src="../bower_components/test-fixture/test-fixture-mocha.js"></script>
-    <link rel="import" href="../bower_components/test-fixture/test-fixture.html">
+  <script src="../bower_components/webcomponentsjs/webcomponents.min.js"></script>
+  <script src="../bower_components/web-component-tester/browser.js"></script>
+  <script src="../bower_components/test-fixture/test-fixture-mocha.js"></script>
+  <link rel="import" href="../bower_components/test-fixture/test-fixture.html">
 
-    <!-- Import the element to test -->
-    <link rel="import" href="../elements/uqlibrary-hours.html">
+  <!-- Import the element to test -->
+  <link rel="import" href="../elements/uqlibrary-hours.html">
 
 </head>
 <body>
 
 <test-fixture id="hours">
-    <template>
-        <uqlibrary-hours auto-load="false"></uqlibrary-hours>
-    </template>
+  <template>
+    <uqlibrary-hours auto-load="false"></uqlibrary-hours>
+  </template>
 </test-fixture>
 
 <script>
-    suite('<uqlibrary-hours> tests', function () {
-        var element;
+  suite('<uqlibrary-hours> tests', function () {
+    var element;
 
-        setup(function () {
-            document.cookie="UQLMockData=enabled";
+    setup(function () {
+      document.cookie = "UQLMockData=enabled";
 
-            element = fixture('hours');
-        });
-
-
-        test('It should load data', function (done) {
-            element.addEventListener('uqlibrary-hours-loaded', function(){
-                var _items = element.$.list.items;
-
-                // Check if the List has the right items
-                expect(_items.length).to.be.equal(element.hours.length);
-                expect(_items[0].name).to.be.equal(element.hours[0].name);
-
-                // Check opening hours functionality
-                var dayString = moment().format('YYYY-MM-DD');
-                var _open = moment(dayString+ ' ' + element.hours[0].open);
-                var _close = moment(dayString+ ' ' + element.hours[0].close);
-                var _now = moment();
-                expect(_items[0].times).to.be.equal(_open.format("h:mm a") + ' - ' + _close.format("h:mm a"));
-
-                expect(_items[0].class).to.be.equal( ((_open.isBefore(_now) && _close.isAfter(_now)) ? 'open' : 'closed') );
-
-                expect(_items[1].name).to.be.equal(element.hours[1].name);
-                expect(_items[1].times).to.be.equal('open 24 hours');
-
-                done();
-            });
-
-            element.$.hoursApi.get();
-        });
+      element = fixture('hours');
     });
+
+
+    test('It should load data', function (done) {
+      element.addEventListener('uqlibrary-hours-loaded', function () {
+        setTimeout(function () {
+          var _items = document.querySelectorAll('.hours-entry');
+
+          // Check if the List has the right items
+          expect(_items.length).to.be.equal(element.hours.length);
+          expect(_items[0].title).to.be.equal(element.hours[0].name);
+
+          done();
+        }, 100);
+      });
+
+      element.$.hoursApi.get();
+    });
+  });
 </script>
 
 </body>

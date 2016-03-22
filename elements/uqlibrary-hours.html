@@ -13,140 +13,148 @@ Example:
 @demo demo/index-compact.html Demo of the Compact view
 -->
 <dom-module id="uqlibrary-hours">
-
+  <template>
     <style is="custom-style" include="common-styles">
-        :host {
-            font-family: var(--font-family);
-            font-size: var(--body-font-size);
-        }
+      :host {
+        @apply(--uql-app-host);
+      }
 
-        paper-ripple {
-            @apply(--layout-fit);
-        }
+      paper-ripple {
+        @apply(--layout-fit);
+      }
 
-        paper-item {
-            cursor: pointer;
-            border-bottom: 1px solid var(--border-color);
-            padding-left: 16px;
+      paper-item {
+        cursor: pointer;
+        border-bottom: 1px solid var(--border-color);
+        padding-left: 16px;
 
-            min-height: 70px;
-        }
+        min-height: 70px;
+      }
 
-        paper-item.compact {
-            min-height: 30px;
-        }
+      paper-item.compact {
+        min-height: 30px;
+      }
 
-        /** Full view styles */
-        .library-info {
-            @apply(--layout-flex);
-        }
+      /** Full view styles */
+      .library-info {
+        @apply(--layout-flex);
+      }
 
-        .library-name {
-            color: var(--accent-color);
-        }
+      .library-name {
+        color: var(--accent-color);
+      }
 
-        .status {
-            padding: 5px;
-            font-size: 2em;
-        }
+      .status {
+        padding: 5px;
+        font-size: 2em;
+      }
 
-        .all-day .library-status {
-            color: var(--available-color);
-        }
+      .all-day .library-status, .open, .all-day {
+        color: var(--available-color);
+      }
 
-        .closed .library-status {
-            color: var(--unavailable-color);
-        }
+      .closed .library-status, .closed {
+        color: var(--unavailable-color);
+      }
 
-        .notes {
-            color: var(--secondary-color);
-        }
+      .notes {
+        color: var(--secondary-color);
+      }
+      /** Compact view styles */
+      .library-abbr {
+        @apply(--layout-flex-2);
+        color: var(--accent-color);
+      }
 
-        .week-hours {
-            padding: 10px;
-        }
+      .library-status {
+        @apply(--layout-flex-2);
+      }
 
-        /** Compact view styles */
-        .library-abbr {
-            @apply(--layout-flex-2);
-            color: var(--accent-color);
-        }
-        .library-status {
-            @apply(--layout-flex-2);
-        }
+      .library-allday {
+        @apply(--layout-flex);
+      }
 
-        .library-allday {
-            @apply(--layout-flex);
-        }
+      paper-item.all-day span {
+        color: var(--available-color);
+      }
 
-        paper-item.all-day span {
-            color: var(--available-color);
-        }
-
-        .library-allday iron-icon {
-            vertical-align: text-bottom;
-        }
+      .library-allday iron-icon {
+        vertical-align: text-bottom;
+      }
     </style>
 
-    <template>
-        <uqlibrary-api-library-hours id="hoursApi"></uqlibrary-api-library-hours>
-        <uqlibrary-ga id="ga" app-name="[[_gaAppName]]"></uqlibrary-ga>
+    <uqlibrary-api-library-hours id="hoursApi"></uqlibrary-api-library-hours>
+    <uqlibrary-ga id="ga" app-name="[[_gaAppName]]"></uqlibrary-ga>
 
-        <template is="dom-if" if="{{compactView}}">
-            <paper-item class="compact header" tabindex="-1">Opening Hours</paper-item>
-        </template>
+    <!-- Compact View -->
+    <template is="dom-if" if="[[compactView]]">
+      <!-- Toolbar -->
+      <paper-item class="compact header" tabindex="-1">Opening Hours</paper-item>
 
-        <template id="list" is="dom-repeat" items="{{hours}}">
-            <!-- Compact view -->
-            <template is="dom-if" if="{{compactView}}">
-                <paper-item class$="compact {{item.class}}"
-                            role="link"
-                            aria-label$="{{item.name}} - Opening hours: {{item.times}}"
-                            title$="{{item.name}}"
-                            on-tap="_itemTapHandler">
-                    <paper-ripple></paper-ripple>
-                    <div class="body1 library-abbr">
-                        {{ item.abbr }}
-                    </div>
-                    <div class="body1 library-status">
-                        {{ item.times }}
-                    </div>
-                    <div class="library-allday body1">
-                        <span hidden$="{{!item.allDay}}">
-                            <iron-icon icon="device:access-time"></iron-icon> 24x7
-                        </span>
-                    </div>
-                </paper-item>
-            </template>
-
-            <!-- Full view -->
-            <template is="dom-if" if="{{!compactView}}">
-                <paper-item
-                        role="link"
-                        title$="{{item.name}}"
-                        aria-label$="{{item.name}} - Opening hours: {{item.times}}"
-                        on-tap="_itemTapHandler">
-                    <paper-ripple></paper-ripple>
-                    <div class="library-info">
-                        <div class="library-name body1">{{item.name}}</div>
-                        <div class="library-hours body1">
-                            {{item.times}}
-                            <span class="notes" hidden$="{{!item.notes}}"> &mdash; {{item.notes}}</span>
-                        </div>
-                    </div>
-                    <div class$="status {{item.class}}" aria-label$="{{item.class}}">&bull;</div>
-                </paper-item>
-            </template>
-        </template>
-
-        <div class="horizontal end-justified layout week-hours" hidden$="{{compactView}}">
-            <div>
-                <paper-button class="button-theme" on-tap="_viewHoursClicked">
-                    <a target="_blank" href="https://www.library.uq.edu.au/hours/">View hours for this week</a>
-                </paper-button>
-            </div>
-        </div>
-
+      <!-- List -->
+      <template id="listCompact" is="dom-repeat" items="{{hours}}">
+        <paper-item class="hours-entry"
+                    class$="compact {{item.class}}"
+                    role="link"
+                    aria-label$="{{item.name}} - Opening hours: {{item.times}}"
+                    title$="{{item.name}}"
+                    on-tap="_itemTapHandler">
+          <paper-ripple></paper-ripple>
+          <div class="body1 library-abbr">[[ item.abbr ]]</div>
+          <div class="body1 library-status">[[ item.times ]]</div>
+          <div class="library-allday body1">
+        <span hidden$="{{!item.allDay}}">
+            <iron-icon icon="device:access-time"></iron-icon> 24x7
+        </span>
+          </div>
+        </paper-item>
+      </template>
     </template>
-    <script src="uqlibrary-hours.js"></script>
+
+    <!-- Full View -->
+    <template is="dom-if" if="[[!compactView]]">
+      <!-- Scaffolding -->
+      <div class="fit layout vertical">
+        <paper-header-panel class="flex">
+          <!-- Header -->
+          <paper-toolbar>
+            <!-- Toolbar -->
+            <template is="dom-if" if="[[!standAlone]]">
+              <paper-icon-button icon="menu" on-tap="_toggleDrawerPanel" paper-drawer-toggle></paper-icon-button>
+            </template>
+            <div class="title uqlibrary-app-title">Library Printing</div>
+          </paper-toolbar>
+          <!-- Content -->
+          <div class="fit">
+            <!-- List of items -->
+            <template is="dom-repeat" items="[[hours]]">
+              <paper-item
+                      class="hours-entry"
+                      role="link"
+                      title$="[[item.name]]"
+                      aria-label$="[[item.name]] - Opening hours: [[item.times]]"
+                      on-tap="_itemTapHandler">
+                <paper-ripple></paper-ripple>
+                <div class="library-info">
+                  <div class="library-name body1">[[item.name]]</div>
+                  <div class="library-hours body1">
+                    [[item.times]]
+                    <span class="notes" hidden$="[[!item.notes]]"> &mdash; [[item.notes]]</span>
+                  </div>
+                </div>
+                <div class$="status [[item.class]]" aria-label$="[[item.class]]">&bull;</div>
+              </paper-item>
+            </template>
+          </div>
+        </paper-header-panel>
+        <!-- Bottom footer -->
+        <paper-toolbar class="uqlibrary-app-footer right">
+          <paper-button class="button-colored-accent" on-tap="_viewHoursClicked">
+            <a target="_blank" href="https://www.library.uq.edu.au/hours/">View hours for this week</a>
+          </paper-button>
+        </paper-toolbar>
+      </div>
+    </template>
+  </template>
+  <script src="uqlibrary-hours.js"></script>
 </dom-module>

@@ -15,7 +15,8 @@
     "uqlibrary-api": "uqlibrary/uqlibrary-api#polymer1.0",
     "uqlibrary-ga": "uqlibrary/uqlibrary-ga#polymer1.0",
     "uqlibrary-styles": "uqlibrary/uqlibrary-styles#master",
-    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0"
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
+    "paper-header-panel": "PolymerElements/paper-header-panel#^1.1.5"
   },
   "devDependencies": {
     "web-component-tester": "*",
