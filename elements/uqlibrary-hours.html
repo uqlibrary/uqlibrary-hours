@@ -94,16 +94,16 @@ Example:
       <!-- List -->
       <template id="listCompact" is="dom-repeat" items="{{hours}}">
         <paper-item class="hours-entry"
-                    class$="compact {{item.class}}"
+                    class$="compact [[item.class]]"
                     role="link"
-                    aria-label$="{{item.name}} - Opening hours: {{item.times}}"
+                    aria-label$="[[item.name]] - Opening hours: [[item.times]]"
                     title$="{{item.name}}"
                     on-tap="_itemTapHandler">
           <paper-ripple></paper-ripple>
           <div class="body1 library-abbr">[[ item.abbr ]]</div>
           <div class="body1 library-status">[[ item.times ]]</div>
           <div class="library-allday body1">
-        <span hidden$="{{!item.allDay}}">
+        <span hidden$="[[!item.allDay]]">
             <iron-icon icon="device:access-time"></iron-icon> 24x7
         </span>
           </div>
@@ -120,9 +120,14 @@ Example:
           <paper-toolbar>
             <!-- Toolbar -->
             <template is="dom-if" if="[[!standAlone]]">
-              <paper-icon-button icon="menu" on-tap="_toggleDrawerPanel" paper-drawer-toggle></paper-icon-button>
+              <paper-icon-button icon="menu"
+                                 on-tap="_toggleDrawerPanel"
+                                 title="open menu button"
+                                 aria-label="open menu button"
+                                 paper-drawer-toggle>
+              </paper-icon-button>
             </template>
-            <div class="title uqlibrary-app-title">Library Hours</div>
+            <div class="title uqlibrary-app-title" title="[[headerTitle]]">[[headerTitle]]</div>
           </paper-toolbar>
           <!-- Content -->
           <div class="fit">
@@ -149,8 +154,11 @@ Example:
         </paper-header-panel>
         <!-- Bottom footer -->
         <paper-toolbar class="uqlibrary-app-footer right">
-          <paper-button class="button-colored-accent" on-tap="_viewHoursClicked">
-            <a target="_blank" href="https://www.library.uq.edu.au/hours/">View hours for this week</a>
+          <paper-button class="button-colored-accent"
+                        on-tap="_viewHoursClicked"
+                        title="View hours for this week"
+                        aria-label="View hours for this week">
+            View hours for this week
           </paper-button>
         </paper-toolbar>
       </div>

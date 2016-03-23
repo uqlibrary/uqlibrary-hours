@@ -45,6 +45,13 @@
       standAlone: {
         type: Object,
         value: true
+      },
+      /**
+       * Header title - application name
+       */
+      headerTitle: {
+        type: String,
+        value: "Hours"
       }
     },
     ready: function () {
@@ -75,6 +82,7 @@
     /** Adds GA event */
     _viewHoursClicked: function (e) {
       this.$.ga.addEvent('Click', 'View all hours');
+      window.open('https://www.library.uq.edu.au/hours/', '_blank');
     },
     /** Parses and formats the JSON array when hours has updated */
     _hoursChanged: function () {
