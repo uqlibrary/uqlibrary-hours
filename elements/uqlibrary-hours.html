@@ -49,29 +49,35 @@ Example:
         font-size: 2em;
       }
 
-      .all-day .library-status, .open, .all-day {
+      .all-day .library-status,
+      .open,
+      .all-day {
         color: var(--available-color);
       }
 
-      .closed .library-status, .closed {
+      .closed .library-status,
+      .closed {
         color: var(--unavailable-color);
       }
 
       .notes {
         color: var(--secondary-color);
       }
+
       /** Compact view styles */
       .library-abbr {
         @apply(--layout-flex-2);
         color: var(--accent-color);
       }
 
-      .library-status {
+      .compact .library-status {
         @apply(--layout-flex-2);
+        white-space: nowrap;
       }
 
       .library-allday {
         @apply(--layout-flex);
+        white-space: nowrap;
       }
 
       paper-item.all-day span {
@@ -81,6 +87,24 @@ Example:
       .library-allday iron-icon {
         vertical-align: text-bottom;
       }
+
+      @media all and (max-width: 320px) {
+        .compact .library-allday {
+          display: none;
+        }
+      }
+
+      @media all and (max-width: 260px) {
+        paper-item.compact.hours-entry {
+          @apply(--layout-vertical);
+          min-height: 50px;
+          line-height: 1em;
+          margin: 6px 0;
+        }
+      }
+
+
+
     </style>
 
     <uqlibrary-api-library-hours id="hoursApi"></uqlibrary-api-library-hours>
@@ -93,8 +117,7 @@ Example:
 
       <!-- List -->
       <template id="listCompact" is="dom-repeat" items="{{hours}}">
-        <paper-item class="hours-entry"
-                    class$="compact [[item.class]]"
+        <paper-item class$="compact hours-entry [[item.class]]"
                     role="link"
                     aria-label$="[[item.name]] - Opening hours: [[item.times]]"
                     title$="{{item.name}}"
@@ -103,9 +126,9 @@ Example:
           <div class="body1 library-abbr">[[ item.abbr ]]</div>
           <div class="body1 library-status">[[ item.times ]]</div>
           <div class="library-allday body1">
-        <span hidden$="[[!item.allDay]]">
-            <iron-icon icon="device:access-time"></iron-icon> 24x7
-        </span>
+            <span hidden$="[[!item.allDay]]">
+                <iron-icon icon="device:access-time"></iron-icon> 24x7
+            </span>
           </div>
         </paper-item>
       </template>
