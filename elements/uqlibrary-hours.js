@@ -77,7 +77,7 @@
      * @param {String} notes
      */
     _has24x7: function (notes) {
-      var regex = new RegExp(/24\s*x\s*7/, 'i');
+      var regex = /24\s*[xX]\s*7/;
       return regex.test(notes);
     },
     /** Redirects the user to the selected Library page */
