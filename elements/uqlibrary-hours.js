@@ -55,17 +55,14 @@
       }
     },
     ready: function () {
-      var self = this;
-
-      // Setup event listener for Hours
-      this.$.hoursApi.addEventListener('uqlibrary-api-library-hours', function (e) {
-        self.setHours(e.detail);
-      });
-
       // Fetch hours
       if (this.autoLoad) {
         this.$.hoursApi.get();
       }
+    },
+    // Setup event listener for Hours
+    hoursLoaded: function (e) {
+      this.setHours(e.detail);
     },
     /**
      * Sorts and sets the "hours" variable
@@ -73,6 +70,15 @@
      */
     setHours: function (hours) {
       this.hours = _.sortBy(hours, (this.compactView ? "abbr" : "name"));
+    },
+    /**
+     * Checks the string for 24 x 7
+     *
+     * @param {String} notes
+     */
+    _has24x7: function (notes) {
+      var regex = new RegExp(/24\s*x\s*7/, 'i');
+      return regex.test(notes);
     },
     /** Redirects the user to the selected Library page */
     _itemTapHandler: function (e) {
@@ -105,12 +111,19 @@
           item.times = "open 24 hours";
           item.class = "all-day";
           item.allDay = true;
-        } else if (_diff == 0) {
+        }
+        else if (_diff == 0) {
           item.times = "Closed";
           item.class = "closed";
-        } else {
+        }
+        else {
           item.times = _open.format("h:mm a") + ' - ' + _close.format("h:mm a");
           item.class = ((_open.isBefore(moment()) && _close.isAfter(moment())) ? 'open' : 'closed');
+
+          if (self._has24x7(item.notes)) {
+            item.allDay = true;
+            item.class = "part-all-day";
+          }
         }
 
         // Fix formatting of notes

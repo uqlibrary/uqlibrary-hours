@@ -51,6 +51,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       "close": "24:00:00",
       "rev": "0",
       "notes": "Walk in access from 7am to 8pm. Entry after 8pm UQ ID card necessary."
+    },
+    {
+      "code": "gat",
+      "name": "Gatton Library (J.K. Murray Library)",
+      "abbr": "Gatt",
+      "url": "https://web.library.uq.edu.au/locations-hours/uq-gatton-library-jk-murray-library",
+      "open": "08:00:00",
+      "close": "22:00:00",
+      "rev": "0",
+      "notes": "The 24x7 Study Space is available when the library is closed."
     }
   ];
 
@@ -80,6 +90,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         expect(_items[1].name).to.be.equal(element.hours[1].name);
         expect(_items[1].times).to.be.equal('open 24 hours');
+        expect(_items[1].class).to.be.equal('all-day');
+
+        expect(_items[2].name).to.be.equal(element.hours[2].name);
+        expect(_items[2].class).to.be.equal('part-all-day');
 
         done();
       });

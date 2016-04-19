@@ -80,6 +80,7 @@ Example:
         white-space: nowrap;
       }
 
+      paper-item.part-all-day span,
       paper-item.all-day span {
         color: var(--available-color);
       }
@@ -107,7 +108,7 @@ Example:
 
     </style>
 
-    <uqlibrary-api-library-hours id="hoursApi"></uqlibrary-api-library-hours>
+    <uqlibrary-api-library-hours id="hoursApi" on-uqlibrary-api-library-hours="hoursLoaded"></uqlibrary-api-library-hours>
     <uqlibrary-ga id="ga" app-name="[[_gaAppName]]"></uqlibrary-ga>
 
     <!-- Compact View -->
