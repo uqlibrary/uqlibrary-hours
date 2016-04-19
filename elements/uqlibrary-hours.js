@@ -110,7 +110,7 @@
         if (_diff == 24) {
           item.times = "open 24 hours";
           item.class = "all-day";
-          item.allDay = true;
+          item.allDay = false;
         }
         else if (_diff == 0) {
           item.times = "Closed";
