@@ -79,27 +79,77 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         expect(_items.length).to.be.equal(hours.length);
         expect(_items[0].name).to.be.equal(hours[0].name);
 
+        done();
+      });
+
+      element.setHours(hours);
+    });
+
+    test('Displays set opening hours', function (done) {
+      element.addEventListener('uqlibrary-hours-loaded', function(){
+        var _items = element.hours;
+
         // Check opening hours functionality
         var dayString = moment().format('YYYY-MM-DD');
         var _open = moment(dayString+ ' ' + element.hours[0].open);
         var _close = moment(dayString+ ' ' + element.hours[0].close);
         var _now = moment();
         expect(_items[0].times).to.be.equal(_open.format("h:mm a") + ' - ' + _close.format("h:mm a"));
-
         expect(_items[0].class).to.be.equal( ((_open.isBefore(_now) && _close.isAfter(_now)) ? 'open' : 'closed') );
-
-        expect(_items[1].name).to.be.equal(element.hours[1].name);
-        expect(_items[1].times).to.be.equal('open 24 hours');
-        expect(_items[1].class).to.be.equal('all-day');
-
-        expect(_items[2].name).to.be.equal(element.hours[2].name);
-        expect(_items[2].class).to.be.equal('part-all-day');
 
         done();
       });
 
       element.setHours(hours);
     });
+
+    test('Displays 24x7 opening hours', function (done) {
+      flush(function () {
+
+        element.addEventListener('uqlibrary-hours-loaded', function () {
+          var _items = element.hours;
+
+          setTimeout(function() {
+            var paperItems = element.querySelectorAll('.compact.hours-entry');
+
+            expect(_items[1].name).to.be.equal(element.hours[1].name);
+            expect(_items[1].times).to.be.equal('open 24 hours');
+            expect(_items[1].class).to.be.equal('all-day');
+
+            expect(paperItems[1].querySelector('iron-icon')).not.to.be.null;
+            expect(paperItems[1].querySelector('.library-status').innerHTML).to.be.equal('open 24 hours');
+
+            done();
+          }, 500);
+
+        });
+        element.setHours(hours);
+
+      });
+    });
+
+    test('Displays set opening hours with 24x7 study', function (done) {
+      element.addEventListener('uqlibrary-hours-loaded', function(){
+        setTimeout(function() {
+
+          var _items = element.hours;
+          var paperItems = element.querySelectorAll('.compact.hours-entry');
+
+
+          expect(_items[2].name).to.be.equal(element.hours[2].name);
+          expect(_items[2].allDay).to.be.equal(true);
+          expect(_items[2].class).to.be.equal('part-all-day');
+
+          expect(paperItems[2].querySelector('iron-icon')).to.be.visible;
+
+          done();
+
+        }, 500);
+      });
+
+      element.setHours(hours);
+    });
+
   });
 </script>
 
