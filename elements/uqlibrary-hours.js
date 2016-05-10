@@ -83,7 +83,7 @@
     /** Redirects the user to the selected Library page */
     _itemTapHandler: function (e) {
       this.$.ga.addEvent('Click', e.model.item.name);
-      window.location = e.model.item.url;
+      window.open(e.model.item.url, '_blank');
     },
     /** Adds GA event */
     _viewHoursClicked: function (e) {

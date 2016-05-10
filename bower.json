@@ -9,13 +9,14 @@
   "private": true,
   "main": "elements/uqlibrary-hours.html",
   "dependencies": {
+    "polymer": "^1.4.0",
     "iron-elements": "PolymerElements/iron-elements#^1.0.0",
     "paper-elements": "PolymerElements/paper-elements#^1.0.0",
     "moment": "moment/moment#^2.10.3",
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
     "paper-header-panel": "PolymerElements/paper-header-panel#^1.1.5",
-    "uqlibrary-api": "uqlibrary/uqlibrary-api#v1.0.0",
-    "uqlibrary-ga": "uqlibrary/uqlibrary-ga#v1.0.0",
+    "uqlibrary-api": "uqlibrary/uqlibrary-api#v1.0.5",
+    "uqlibrary-ga": "uqlibrary/uqlibrary-ga#v1.0.3",
     "uqlibrary-styles": "uqlibrary/uqlibrary-styles#v1.0.0"
   },
   "devDependencies": {
