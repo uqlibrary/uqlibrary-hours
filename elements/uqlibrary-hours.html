@@ -125,17 +125,16 @@ Example:
         <paper-item class$="compact hours-entry [[item.class]]"
                     role="link"
                     aria-label$="[[item.name]] - Opening hours: [[item.times]]"
-                    title$="{{item.name}}"
                     on-tap="_itemTapHandler">
           <paper-ripple></paper-ripple>
-          <div class="body1 library-abbr">[[ item.abbr ]]</div>
+          <div class="body1 library-abbr" title$="{{item.name}}">[[ item.abbr ]]</div>
           <div class="body1 library-status">[[ item.times ]]</div>
           <div class="library-allday body1">
             <span hidden$="[[!item.allDay]]">
                 <iron-icon icon="device:access-time"></iron-icon> 24x7
             </span>
             <span hidden$="[[!item.hasInfo]]">
-              <iron-icon icon="info" class="info-icon"></iron-icon>
+              <iron-icon icon="info" class="info-icon" title$="[[item.notes]]"></iron-icon>
             </span>
           </div>
         </paper-item>
