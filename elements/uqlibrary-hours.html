@@ -64,6 +64,10 @@ Example:
         color: var(--secondary-color);
       }
 
+      paper-item iron-icon.info-icon {
+        color: var(--accent-color) !important;
+      }
+
       /** Compact view styles */
       .library-abbr {
         @apply(--layout-flex-2);
@@ -129,6 +133,9 @@ Example:
           <div class="library-allday body1">
             <span hidden$="[[!item.allDay]]">
                 <iron-icon icon="device:access-time"></iron-icon> 24x7
+            </span>
+            <span hidden$="[[!item.hasInfo]]">
+              <iron-icon icon="info" class="info-icon"></iron-icon>
             </span>
           </div>
         </paper-item>

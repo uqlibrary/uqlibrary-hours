@@ -80,6 +80,16 @@
       var regex = /24\s*[xX]\s*7/;
       return regex.test(notes);
     },
+    /**
+     * Checks the notes string for "Info:"
+     * @param notes
+     * @returns {boolean}
+     * @private
+     */
+    _hasInfo: function (notes) {
+      var regex = /Info:/;
+      return regex.test(notes);
+    },
     /** Redirects the user to the selected Library page */
     _itemTapHandler: function (e) {
       this.$.ga.addEvent('Click', e.model.item.name);
@@ -105,6 +115,8 @@
 
         // Fix formatting of the library name
         item.name = item.name.replace(/&amp;/g, '&').replace(/&ndash;/g, '-');
+
+        item.hasInfo = self._hasInfo(item.notes);
 
         // Format the opening text
         if (_diff == 24) {
