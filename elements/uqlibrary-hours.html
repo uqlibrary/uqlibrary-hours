@@ -94,8 +94,19 @@ Example:
       }
 
       @media all and (max-width: 320px) {
-        .compact .library-allday {
-          display: none;
+        paper-item {
+          font-size: 0.75em;
+        }
+      }
+
+      @media all and (max-width: 400px) {
+        paper-item {
+          font-size: 0.9em;
+        }
+
+        iron-icon {
+          width: 16px;
+          height: 16px;
         }
       }
 
