@@ -1,18 +1,35 @@
 # uqlibrary-hours
 
-uqlibrary-hours is a simple list view showing opening hours for all libraries at the University of Queensland.
+uqlibrary-hours displays academic hours to the end user
 
-Full documentation can be found at [GitHub Pages](http://uqlibrary.github.io/uqlibrary-hours).
+Example of full documentation can be found at [GitHub Pages](http://uqlibrary.github.io/uqlibrary-hours).
 
 ### Getting Started
-Install Node.JS and run the following oneliner in the project directory:
 ```sh
-npm install -g bower && bower install
+npm install && bower install
+gulp serve
 ```
+
+### Running with live data locally
+Add dev-app.library.uq.edu.au to your /etc/hosts or equivalent file
+
+```
+gulp live
+```
+
+This comments out the calls to create the Mock cookies in index.html.  Note the browser often caches the html so 
+check the source for the calls and do a hard refresh if they aren't commented out.
+
+If you still have the mock cookies in your browser, delete them via your browser.
+
+Use the Masquerading function at app.library.uq.edu.au/v1/home to masquerade as a user with data you are interested in.
+
+Return to your demo page, refresh and you should be getting live data.
+
 
 ### Developing
 - Please adhere to the Polymer code style guide provided at [Style Guide](http://polymerelements.github.io/style-guide/). 
-- Colors and common styles are imported (bower install) from [uqlibrary-styles](http://github.com/uqlibrary/uqlibrary-hours).
+- Colors and common styles are imported (bower install) from [uqlibrary-styles](http://github.com/uqlibrary/uqlibrary-styles).
 - GitHub pages should be updated after every commit to Master by running the "generate-gh-pages.sh" in the /bin/ directory
 
 ### Testing
@@ -20,3 +37,10 @@ Tests are run using the Web Component Tester. Either navigate to /tests/index.ht
 ```sh
 wct --local all
 ```
+
+##DEPRECATED: uqlibrary-hours - master/uat/staging/production
+
+This application used to be a part of a set of MyLibrary applications implemented with Google Polymer v0.5 at app.library.uq.edu.au/v1/hours.
+
+Production branch deployment is currently just a redirect to live MyLibrary. To be removed after a reasonable time.
+
