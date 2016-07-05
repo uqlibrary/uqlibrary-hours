@@ -9,9 +9,6 @@ if [ ${CI_BRANCH} != "GH_PAGES" ]; then
     npm install npm@latest -g
     npm install -g bower web-component-tester@4.2.2
 
-    echo "getting NPM version"
-    npm version
-
     echo "Installing bower dependencies"
     bower install
 
