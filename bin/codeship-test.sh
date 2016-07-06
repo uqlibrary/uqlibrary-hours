@@ -6,7 +6,6 @@ echo "Testing branch: ${CI_BRANCH} with pipe ${PIPE_NUM}"
 if [ ${CI_BRANCH} != "GH_PAGES" ]; then
     # Run local tests
     echo "Installing global"
-    nvm install v4.4.7
     npm install -g bower web-component-tester
 
     echo "Installing bower dependencies"

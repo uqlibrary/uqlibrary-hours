@@ -31,17 +31,9 @@ Example:
         min-height: 70px;
       }
 
-      paper-item.compact {
-        min-height: 30px;
-      }
-
       /** Full view styles */
       .library-info {
         @apply(--layout-flex);
-      }
-
-      .library-name {
-        color: var(--accent-color);
       }
 
       .status {
@@ -69,15 +61,6 @@ Example:
       }
 
       /** Compact view styles */
-      .library-abbr {
-        @apply(--layout-flex-2);
-        color: var(--accent-color);
-      }
-
-      .compact.hours-entry {
-        font-size: 1em;
-      }
-
       .compact .library-status {
         @apply(--layout-flex-2);
         white-space: nowrap;
@@ -97,33 +80,12 @@ Example:
         vertical-align: text-bottom;
       }
 
-      @media all and (max-width: 320px) {
-        paper-item {
-          font-size: 0.75em;
-        }
-      }
-
       @media all and (max-width: 400px) {
-        paper-item {
-          font-size: 0.9em;
-        }
-
         iron-icon {
           width: 16px;
           height: 16px;
         }
       }
-
-      @media all and (max-width: 260px) {
-        paper-item.compact.hours-entry {
-          @apply(--layout-vertical);
-          min-height: 50px;
-          line-height: 1em;
-          margin: 6px 0;
-        }
-      }
-
-
 
     </style>
 
@@ -137,12 +99,12 @@ Example:
 
       <!-- List -->
       <template id="listCompact" is="dom-repeat" items="{{hours}}">
-        <paper-item class$="compact hours-entry [[item.class]]"
+        <paper-item class$="detail-item compact hours-entry [[item.class]]"
                     role="link"
                     aria-label$="[[item.name]] - Opening hours: [[item.times]]"
                     on-tap="_itemTapHandler">
           <paper-ripple></paper-ripple>
-          <div class="body1 library-abbr" title$="{{item.name}}">[[ item.abbr ]]</div>
+          <div class="linked-item body1 library-abbr" title$="{{item.name}}">[[ item.abbr ]]</div>
           <div class="body1 library-status">[[ item.times ]]</div>
           <div class="library-allday body1">
             <span hidden$="[[!item.allDay]]">
@@ -186,7 +148,7 @@ Example:
                       on-tap="_itemTapHandler">
                 <paper-ripple></paper-ripple>
                 <div class="library-info">
-                  <div class="library-name body1">[[item.name]]</div>
+                  <div class="linked-item library-name body1">[[item.name]]</div>
                   <div class="library-hours body1">
                     [[item.times]]
                     <span class="notes" hidden$="[[!item.notes]]"> &mdash; [[item.notes]]</span>
