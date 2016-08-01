@@ -93,12 +93,12 @@
     /** Redirects the user to the selected Library page */
     _itemTapHandler: function (e) {
       this.$.ga.addEvent('Click', e.model.item.name);
-      window.open(e.model.item.url, '_blank');
+      window.location.href = e.model.item.url;
     },
     /** Adds GA event */
     _viewHoursClicked: function (e) {
       this.$.ga.addEvent('Click', 'View all hours');
-      window.open('https://www.library.uq.edu.au/hours/', '_blank');
+      window.location.href = 'https://www.library.uq.edu.au/hours/';
     },
     /** Parses and formats the JSON array when hours has updated */
     _hoursChanged: function () {
