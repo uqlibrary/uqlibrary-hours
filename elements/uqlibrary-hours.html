@@ -111,7 +111,7 @@ Example:
                 <iron-icon icon="device:access-time"></iron-icon> 24x7
             </span>
             <span hidden$="[[!item.hasInfo]]">
-              <iron-icon icon="info" class="info-icon" title$="[[item.notes]]"></iron-icon>
+              <iron-icon icon="info" class="info-icon" title$="[[item.fn]]"></iron-icon>
             </span>
           </div>
         </paper-item>
@@ -151,7 +151,7 @@ Example:
                   <div class="linked-item library-name body1">[[item.name]]</div>
                   <div class="library-hours body1">
                     [[item.times]]
-                    <span class="notes" hidden$="[[!item.notes]]"> &mdash; [[item.notes]]</span>
+                    <span class="notes" hidden$="[[!item.fn]]"> &mdash; [[item.fn]]</span>
                   </div>
                 </div>
                 <div class$="status [[item.class]]" aria-label$="[[item.class]]">&bull;</div>

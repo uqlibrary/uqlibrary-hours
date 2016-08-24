@@ -51,7 +51,7 @@
        */
       headerTitle: {
         type: String,
-        value: "Hours"
+        value: 'Hours'
       }
     },
     ready: function () {
@@ -65,11 +65,22 @@
       this.setHours(e.detail);
     },
     /**
-     * Sorts and sets the "hours" variable
+     * Filter out libraries with no departments, sorts by name/abbr and sets the "hours" variable
      * @param hours
      */
     setHours: function (hours) {
-      this.hours = _.sortBy(hours, (this.compactView ? "abbr" : "name"));
+      hours.locations.forEach( function(lib, index, obj) {
+        if (!lib.departments) {
+          obj.splice(index, 1);
+          return;
+        }
+        if (!lib.abbr) {
+          lib.abbr = lib.name.substring(0,15); //15 chars
+        }
+      });
+
+     // this.hours = hours.locations.filter(function(lib){return lib.departments});
+      this.hours = _.sortBy(hours.locations, (this.compactView ? 'abbr' : 'name'));
     },
     /**
      * Checks the string for 24 x 7
@@ -104,43 +115,42 @@
     _hoursChanged: function () {
       var self = this;
 
-      var dayString = moment().format("YYYY-MM-DD");
-      var _open, _close, _diff;
-      _.forEach(self.hours, function (item) {
-        _open = moment(dayString + ' ' + item.open);
-        _close = moment(dayString + ' ' + item.close);
-        _diff = _close.diff(_open, 'hours');
+      this.hours.forEach(function (item) {
+        var department = item.departments[0],
+            status = department.times.status,
+            dayString = moment().format("YYYY-MM-DD"),
+            _open, _close;
 
         item.allDay = false;
 
-        // Fix formatting of the library name
+        // Fix formatting of the library name and foot notes
         item.name = item.name.replace(/&amp;/g, '&').replace(/&ndash;/g, '-');
+        item.fn = item.fn.replace(/&amp;/g, '&').replace(/&ndash;/g, '-');
 
-        item.hasInfo = self._hasInfo(item.notes);
+        item.hasInfo = self._hasInfo(item.fn);
 
-        // Format the opening text
-        if (_diff == 24) {
-          item.times = "open 24 hours";
-          item.class = "all-day";
-          item.allDay = false;
-        }
-        else if (_diff == 0) {
+        if (status === 'closed') {
+
           item.times = "Closed";
           item.class = "closed";
-        }
-        else {
-          item.times = _open.format("h:mm a") + ' - ' + _close.format("h:mm a");
-          item.class = ((_open.isBefore(moment()) && _close.isAfter(moment())) ? 'open' : 'closed');
 
-          if (self._has24x7(item.notes)) {
+        } else if(status === '24hours') {
+
+          item.times  = "open 24 hours";
+          item.class  = "all-day";
+
+        } else {
+
+          _open  = moment(dayString + ' ' + department.open);
+          _close = moment(dayString + ' ' + department.close);
+          // Format the opening text
+          item.times = _open.format('h:mm a') + ' - ' + _close.format('h:mm a');
+          item.class = department.times.currently_open ? 'open' : 'closed';
+
+          if (self._has24x7(item.fn)) {
             item.allDay = true;
-            item.class = "part-all-day";
+            item.class  = "part-all-day";
           }
-        }
-
-        // Fix formatting of notes
-        if (item.notes) {
-          item.notes = item.notes.replace(/&amp;/g, '&').replace(/&ndash;/g, '-');
         }
       });
 

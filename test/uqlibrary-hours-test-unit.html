@@ -23,27 +23,140 @@
 </test-fixture>
 
 <script>
-  var hours = [
+var hours = {
+  "locations": [
     {
-      "code": "arm",
-      "name": "Architecture / Music Library",
+      "lid": 3823,
+      "name": "Architecture & Music Library",
+      "category": "library",
+      "day": "Tuesday",
+      "desc": "",
+      "url": "https://web.library.uq.edu.au/locations-hours/architecture-music-library",
+      "contact": "",
+      "fn": "24x7",
+      "lat": "",
+      "long": "",
+      "color": "#1C6DBD",
+      "times": {
+        "currently_open": false,
+        "status": "text",
+        "text": " "
+      },
+      "rendered": " ",
       "abbr": "Arch Music",
-      "url": "http://www.library.uq.edu.au/locations/architecture-music-library",
-      "open": "09:00:00",
-      "close": "17:00:00",
-      "rev": "0"
+      "departments": [
+        {
+          "lid": 3828,
+          "name": "AskUs Service Point",
+          "category": "department",
+          "day": "Tuesday",
+          "desc": "",
+          "url": "",
+          "contact": "",
+          "lat": "",
+          "long": "",
+          "color": "#000000",
+          "parent_lid": 3823,
+          "times": {
+            "currently_open": true,
+            "status": "open",
+            "hours": [
+              {
+                "from": "8am",
+                "to": "6pm"
+              }
+            ]
+          },
+          "rendered": "8am - 6pm",
+          "open": "08:00:00",
+          "close": "18:00:00"
+        }
+      ]
     },
     {
-      "code": "bio",
+      "lid": 3824,
       "name": "Biological Sciences Library",
-      "abbr": "Biol Sci",
-      "url": "http://www.library.uq.edu.au/locations/biological-sciences-library",
-      "open": "00:00:00",
-      "close": "24:00:00",
-      "rev": "0",
-      "notes": "Walk in access from 7am to 8pm. Entry after 8pm UQ ID card necessary."
+      "category": "library",
+      "day": "Tuesday",
+      "desc": "",
+      "url": "https://web.library.uq.edu.au/locations-hours/biological-sciences-library",
+      "contact": "",
+      "fn": "",
+      "lat": "",
+      "long": "",
+      "color": "#0E6E0E",
+      "times": {
+        "currently_open": false,
+        "status": "text",
+        "text": " "
+      },
+      "rendered": " ",
+      "abbr": "",
+      "departments": [
+        {
+          "lid": 3829,
+          "name": "Study space",
+          "category": "department",
+          "day": "Tuesday",
+          "desc": "",
+          "url": "",
+          "contact": "",
+          "lat": "",
+          "long": "",
+          "color": "#000000",
+          "parent_lid": 3824,
+          "times": {
+            "currently_open": true,
+            "status": "24hours"
+          },
+          "rendered": "24 Hours",
+          "open": "00:00:00",
+          "close": "24:00:00"
+        }
+      ]
+    },
+    {
+      "lid": 3841,
+      "name": "Law Library",
+      "category": "library",
+      "day": "Tuesday",
+      "desc": "",
+      "url": "https://web.library.uq.edu.au/locations-hours/law-library-walter-harrison-library",
+      "contact": "",
+      "fn": "Law Library closed for refurbishment 27th Nov 2015 to 3rd Jan 2017",
+      "lat": "",
+      "long": "",
+      "color": "#1C6DBD",
+      "times": {
+        "currently_open": false,
+        "status": "text",
+        "text": " "
+      },
+      "rendered": " ",
+      "abbr": "",
+      "departments": [
+        {
+          "lid": 3849,
+          "name": "AskUs Service Point",
+          "category": "department",
+          "day": "Tuesday",
+          "desc": "",
+          "url": "",
+          "contact": "",
+          "lat": "",
+          "long": "",
+          "color": "#000000",
+          "parent_lid": 3841,
+          "times": {
+            "currently_open": false,
+            "status": "closed"
+          },
+          "rendered": "Closed"
+        }
+      ]
     }
-  ];
+  ]
+};
 
   suite('<uqlibrary-hours> tests', function () {
     var element;
@@ -57,20 +170,21 @@
         var _items = element.hours;
 
         // Check if the List has the right items
-        expect(_items.length).to.be.equal(hours.length);
-        expect(_items[0].name).to.be.equal(hours[0].name);
+        expect(_items[0].name).to.be.equal('Architecture & Music Library');
+        expect(_items[0].abbr).to.be.equal('Arch Music');
 
         // Check opening hours functionality
-        var dayString = moment().format('YYYY-MM-DD');
-        var _open = moment(dayString + ' ' + element.hours[0].open);
-        var _close = moment(dayString + ' ' + element.hours[0].close);
-        var _now = moment();
-        expect(_items[0].times).to.be.equal(_open.format("h:mm a") + ' - ' + _close.format("h:mm a"));
+        expect(_items[0].times).to.be.equal('8:00 am - 6:00 pm');
+        expect(_items[0].class).to.be.equal('part-all-day');
 
-        expect(_items[0].class).to.be.equal(((_open.isBefore(_now) && _close.isAfter(_now)) ? 'open' : 'closed'));
-
-        expect(_items[1].name).to.be.equal(element.hours[1].name);
+        expect(_items[1].name).to.be.equal('Biological Sciences Library');
+        expect(_items[1].abbr).to.be.equal('Biological Scie');
         expect(_items[1].times).to.be.equal('open 24 hours');
+        expect(_items[1].class).to.be.equal('all-day');
+
+        expect(_items[2].name).to.be.equal('Law Library');
+        expect(_items[2].times).to.be.equal('Closed');
+        expect(_items[2].class).to.be.equal('closed');
 
         done();
       });
