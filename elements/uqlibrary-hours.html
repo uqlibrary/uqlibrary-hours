@@ -61,13 +61,14 @@ Example:
       }
 
       /** Compact view styles */
-      .compact .library-status {
-        @apply(--layout-flex-2);
-        white-space: nowrap;
+      .compact .library-status,
+      .compact .library-abbr {
+          @apply(--layout-flex-3);
+          white-space: nowrap;
       }
 
       .library-allday {
-        @apply(--layout-flex);
+        @apply(--layout-flex-2);
         white-space: nowrap;
       }
 
@@ -110,7 +111,7 @@ Example:
             <span hidden$="[[!item.allDay]]">
                 <iron-icon icon="device:access-time"></iron-icon> 24x7
             </span>
-            <span hidden$="[[!item.hasInfo]]">
+            <span hidden$="[[!item.fn.length]]">
               <iron-icon icon="info" class="info-icon" title$="[[item.fn]]"></iron-icon>
             </span>
           </div>
