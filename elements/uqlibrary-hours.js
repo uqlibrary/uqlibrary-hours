@@ -83,13 +83,22 @@
       this.hours = _.sortBy(hours.locations, (this.compactView ? 'abbr' : 'name'));
     },
     /**
-     * Checks the string for 24 x 7
+     * Check for other departments open 24 hours
      *
-     * @param {String} notes
+     * @param {array} departments
      */
-    _has24x7: function (notes) {
-      var regex = /24\s*[xX]\s*7/;
-      return regex.test(notes);
+    _has24x7: function (departments) {
+      if (departments.length === 1) {
+        return false;
+      }
+
+      //check for 24 hours study area
+      for(var i = 1; i < departments.length; i++){
+        if (departments[i].times.status === '24hours') {
+          return true;
+        }
+      }
+      return false;
     },
     /**
      * Checks the notes string for "Info:"
@@ -147,7 +156,7 @@
           item.times = _open.format('h:mm a') + ' - ' + _close.format('h:mm a');
           item.class = department.times.currently_open ? 'open' : 'closed';
 
-          if (self._has24x7(item.fn)) {
+          if (self._has24x7(item.departments)) {
             item.allDay = true;
             item.class  = "part-all-day";
           }
