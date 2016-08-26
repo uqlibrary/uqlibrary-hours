@@ -122,9 +122,9 @@
 
         item.allDay = false;
 
-        // Fix formatting of the library name and foot notes
-        item.name = item.name.replace(/&amp;/g, '&').replace(/&ndash;/g, '-');
-        item.fn = item.fn.replace(/&amp;/g, '&').replace(/&ndash;/g, '-');
+        // Strip special characters from library name and foot notes
+        item.name = self._stripStr(item.name);
+        item.fn = self._stripStr(item.fn);
 
         if (status === 'closed') {
 
@@ -166,6 +166,17 @@
      */
     _toggleDrawerPanel: function () {
       this.fire('uqlibrary-toggle-drawer');
+    },
+    /**
+     * Strip special characters from the string
+     * @private
+     * @param str
+     */
+    _stripStr: function(str) {
+      str = str.replace(/<\/?[^>]+(>|$)/g, '').replace(/\\r?\\n|\\r|\\t|\r?\n|\r|\t/g,' '); //html tags, breaklines and tabs
+      var elem = document.createElement('textarea'); //decode &amps;, &#39;,&ndash; etc.
+      elem.innerHTML = str;
+      return elem.value.replace(/[`~!@#$%^*|+=?;'"\{\}\[\]\\\/]/g, ''); //special characters
     }
   });
 })();
