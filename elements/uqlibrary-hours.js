@@ -123,8 +123,13 @@
         item.allDay = false;
 
         // Strip special characters from library name and foot notes
-        item.name = self._stripStr(item.name);
-        item.fn = self._stripStr(item.fn);
+          item.name = self._stripStr(item.name);
+          item.fn = self._stripStr(item.fn);
+
+        // If the footnote contains "Info:", then show the footnote info icon
+        if (item.fn.indexOf('Info:')) {
+          item.fn = false;
+        }
 
         if (status === 'closed') {
 
@@ -133,7 +138,7 @@
 
         } else if(status === '24hours') {
 
-          item.times  = "open 24 hours";
+          item.times  = "Open 24 hours";
           item.class  = "all-day";
 
         } else {
@@ -141,7 +146,7 @@
           _open  = moment(dayString + ' ' + department.open);
           _close = moment(dayString + ' ' + department.close);
           // Format the opening text
-          item.times = _open.format('h:mm a') + ' - ' + _close.format('h:mm a');
+          item.times = department.rendered; //_open.format('h:mm a') + ' - ' + _close.format('h:mm a');
           item.class = department.times.currently_open ? 'open' : 'closed';
 
           if (self._has24x7(item.departments)) {

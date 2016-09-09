@@ -70,6 +70,7 @@ Example:
       .library-allday {
         @apply(--layout-flex-2);
         white-space: nowrap;
+          text-align: right;
       }
 
       paper-item.part-all-day span,
@@ -81,11 +82,19 @@ Example:
         vertical-align: text-bottom;
       }
 
+      .library-allday img {
+          height: 24px;
+          margin-right: 10px;
+      }
+
       @media all and (max-width: 400px) {
         iron-icon {
           width: 16px;
           height: 16px;
         }
+         .library-allday img {
+             height: 20px;
+         }
       }
 
     </style>
@@ -109,10 +118,12 @@ Example:
           <div class="body1 library-status">[[ item.times ]]</div>
           <div class="library-allday body1">
             <span hidden$="[[!item.allDay]]">
-                <iron-icon icon="device:access-time"></iron-icon> 24x7
+                <img src="uqlib_icon_247.svg" title="24/7 Study Spaces available">
+                <!-- <iron-icon icon="device:access-time"></iron-icon> 24x7 -->
             </span>
             <span hidden$="[[!item.fn]]">
-              <iron-icon icon="info" class="info-icon" title$="[[item.fn]]"></iron-icon>
+                <img src="uqlib_icon_info.svg" title$="[[item.fn]]">
+              <!-- <iron-icon icon="info" class="info-icon" title$="[[item.fn]]"></iron-icon> -->
             </span>
           </div>
         </paper-item>
@@ -141,7 +152,7 @@ Example:
           <div class="fit">
             <!-- List of items -->
             <template is="dom-repeat" items="[[hours]]">
-              <paper-item
+              <paper-item>
                       class="hours-entry"
                       role="link"
                       title$="[[item.name]]"
