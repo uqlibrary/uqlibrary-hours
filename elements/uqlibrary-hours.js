@@ -126,7 +126,7 @@
           item.name = self._stripStr(item.name);
           item.fn = self._stripStr(item.fn);
 
-        // If the footnote contains "Info:", then show the footnote info icon
+        // If the footnote does not contain "Info:", then hide the footnote info icon
         if (item.fn.indexOf('Info:')) {
           item.fn = false;
         }
