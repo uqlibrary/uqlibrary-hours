@@ -17,7 +17,7 @@
     "paper-header-panel": "PolymerElements/paper-header-panel#^1.1.5",
     "uqlibrary-api": "uqlibrary/uqlibrary-api#hours",
     "uqlibrary-ga": "uqlibrary/uqlibrary-ga#v1.0.5",
-    "uqlibrary-styles": "uqlibrary/uqlibrary-styles#v1.0.9"
+    "uqlibrary-styles": "uqlibrary/uqlibrary-styles#v1.1.0"
   },
   "devDependencies": {
     "web-component-tester": "4.2.2",

@@ -1,5 +1,4 @@
 <link rel="import" href="elements.html">
-
 <!--
 `<uqlibrary-hours>` is a simple element that displays the opening hours for each of the libraries
 
@@ -56,9 +55,6 @@ Example:
         color: var(--secondary-color);
       }
 
-      paper-item iron-icon.info-icon {
-        color: var(--accent-color) !important;
-      }
 
       /** Compact view styles */
       .compact .library-status,
@@ -82,20 +78,17 @@ Example:
         vertical-align: text-bottom;
       }
 
-      .library-allday img {
-          height: 24px;
-          margin-right: 10px;
-      }
-
       @media all and (max-width: 400px) {
         iron-icon {
           width: 16px;
           height: 16px;
         }
-         .library-allday img {
-             height: 20px;
-             margin-right: 0px;
-         }
+        }
+
+      paper-item iron-icon.uqlibrary-icon-247 {
+        color: var(--available-color) !important;
+        width: calc(var(--icon-height) * 1.54);
+        height: var(--icon-height);
       }
 
     </style>
@@ -118,13 +111,11 @@ Example:
           <div class="linked-item body1 library-abbr" title$="{{item.name}}">[[ item.abbr ]]</div>
           <div class="body1 library-status">[[ item.times ]]</div>
           <div class="library-allday body1">
-            <span hidden$="[[!item.allDay]]">
-                <img src="uqlib_icon_247.svg" title="24/7 Study Spaces available">
-                <!-- <iron-icon icon="device:access-time"></iron-icon> 24x7 -->
-            </span>
+              <span hidden$="[[!item.allDay]]">
+                <iron-icon icon="uq-icons:247-icon" class="uqlibrary-icon-247" ></iron-icon>
+              </span>
             <span hidden$="[[!item.fn]]">
-                <img src="uqlib_icon_info.svg" title$="[[item.fn]]">
-              <!-- <iron-icon icon="info" class="info-icon" title$="[[item.fn]]"></iron-icon> -->
+              <iron-icon icon="icons:info-outline" title$="[[item.fn]]"></iron-icon>
             </span>
           </div>
         </paper-item>
@@ -153,7 +144,7 @@ Example:
           <div class="fit">
             <!-- List of items -->
             <template is="dom-repeat" items="[[hours]]">
-              <paper-item>
+              <paper-item
                       class="hours-entry"
                       role="link"
                       title$="[[item.name]]"
