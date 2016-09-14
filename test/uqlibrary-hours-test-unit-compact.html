@@ -221,7 +221,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var _items = element.hours;
 
         // Check opening hours functionality
-        expect(_items[0].times).to.be.equal('8:00 am - 6:00 pm');
+        expect(_items[0].times).to.be.equal('8am - 6pm');
         expect(_items[0].class).to.be.equal('open');
 
         done();
@@ -240,11 +240,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             var paperItems = element.querySelectorAll('.compact.hours-entry');
 
             expect(_items[1].name).to.be.equal(hours['locations'][1].name);
-            expect(_items[1].times).to.be.equal('open 24 hours');
+            expect(_items[1].times).to.be.equal('Open 24 hours');
             expect(_items[1].class).to.be.equal('all-day');
 
             expect(paperItems[1].querySelector('iron-icon')).not.to.be.null;
-            expect(paperItems[1].querySelector('.library-status').innerHTML).to.be.equal('open 24 hours');
+            expect(paperItems[1].querySelector('.library-status').innerHTML).to.be.equal('Open 24 hours');
 
             done();
           }, 500);
