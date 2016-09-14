@@ -15,7 +15,7 @@
     "moment": "moment/moment#^2.10.3",
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
     "paper-header-panel": "PolymerElements/paper-header-panel#^1.1.5",
-    "uqlibrary-api": "uqlibrary/uqlibrary-api#hours",
+    "uqlibrary-api": "uqlibrary/uqlibrary-api#v1.3.2",
     "uqlibrary-ga": "uqlibrary/uqlibrary-ga#v1.0.5",
     "uqlibrary-styles": "uqlibrary/uqlibrary-styles#v1.1.0"
   },
