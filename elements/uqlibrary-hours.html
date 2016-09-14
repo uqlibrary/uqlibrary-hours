@@ -43,12 +43,12 @@ Example:
       .all-day .library-status,
       .open,
       .all-day, .part-all-day {
-        color: var(--available-color);
+        color: var(--available-color) !important;
       }
 
       .closed .library-status,
       .closed {
-        color: var(--unavailable-color);
+        color: var(--unavailable-color) !important;
       }
 
       .notes {
@@ -158,7 +158,7 @@ Example:
                     <span class="notes" hidden$="[[!item.fn]]"> &mdash; [[item.fn]]</span>
                   </div>
                 </div>
-                <div class$="status [[item.class]]" aria-label$="[[item.class]]">&bull;</div>
+                <div class$="status [[item.class]]" aria-label$="[[item.class]]">●</div>
               </paper-item>
             </template>
           </div>
