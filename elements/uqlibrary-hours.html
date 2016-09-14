@@ -78,17 +78,25 @@ Example:
         vertical-align: text-bottom;
       }
 
-      @media all and (max-width: 400px) {
-        iron-icon {
-          width: 16px;
-          height: 16px;
-        }
-        }
-
       paper-item iron-icon.uqlibrary-icon-247 {
         color: var(--available-color) !important;
         width: calc(var(--icon-height) * 1.54);
         height: var(--icon-height);
+      }
+
+      paper-item iron-icon.uqlibrary-icon-info {
+        color: var(--accent-color-dark) !important;
+      }
+
+      @media all and (max-width: 400px) {
+        iron-icon {
+          width: 18px;
+          height: 18px;
+        }
+        paper-item iron-icon.uqlibrary-icon-247 {
+          width: 28px;
+          height: 18px;
+        }
       }
 
     </style>
@@ -112,10 +120,10 @@ Example:
           <div class="body1 library-status">[[ item.times ]]</div>
           <div class="library-allday body1">
               <span hidden$="[[!item.allDay]]">
-                <iron-icon icon="uq-icons:247-icon" class="uqlibrary-icon-247" ></iron-icon>
+                <iron-icon icon="uq-icons:247-icon" class="uqlibrary-icon-247" title="Part of this location is open 24/7"></iron-icon>
               </span>
             <span hidden$="[[!item.fn]]">
-              <iron-icon icon="icons:info-outline" title$="[[item.fn]]" class="uqlibrary-icon-info"></iron-icon>
+              <iron-icon icon="icons:info-outline" title="Extended study space hours" class="uqlibrary-icon-info"></iron-icon>
             </span>
           </div>
         </paper-item>
