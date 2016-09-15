@@ -127,9 +127,8 @@
           item.fn = self._stripStr(item.fn);
 
         // If the footnote does not contain "Info:", then hide the footnote info icon
-        if (item.fn.indexOf('Info:')) {
-          item.fn = "";
-        }
+        item.showInfo = item.fn.indexOf('Info:') >= 0;
+
 
         if (status === 'closed') {
 

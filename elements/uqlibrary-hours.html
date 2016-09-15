@@ -119,12 +119,15 @@ Example:
           <div class="linked-item body1 library-abbr" title$="{{item.name}}">[[ item.abbr ]]</div>
           <div class="body1 library-status">[[ item.times ]]</div>
           <div class="library-allday body1">
-              <span hidden$="[[!item.allDay]]">
-                <iron-icon icon="uq-icons:247-icon" class="uqlibrary-icon-247" title="Part of this location is open 24/7"></iron-icon>
-              </span>
-            <span hidden$="[[!item.fn]]">
+
+            <template is="dom-if" if="[[item.allDay]]">
+              <iron-icon icon="uq-icons:247-icon" class="uqlibrary-icon-247" title="Part of this location is open 24/7"></iron-icon>
+            </template>
+
+            <template is="dom-if" if="[[item.showInfo]]">
               <iron-icon icon="icons:info-outline" title="Extended study space hours" class="uqlibrary-icon-info"></iron-icon>
-            </span>
+            </template>
+
           </div>
         </paper-item>
       </template>
@@ -163,7 +166,9 @@ Example:
                   <div class="linked-item library-name body1">[[item.name]]</div>
                   <div class="library-hours body1">
                     [[item.times]]
+
                     <span class="notes" hidden$="[[!item.fn]]"> &mdash; [[item.fn]]</span>
+
                   </div>
                 </div>
                 <div class$="status [[item.class]]" aria-label$="[[item.class]]">●</div>

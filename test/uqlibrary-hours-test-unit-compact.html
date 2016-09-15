@@ -42,7 +42,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         "desc": "",
         "url": "https://web.library.uq.edu.au/locations-hours/architecture-music-library",
         "contact": "",
-        "fn": "",
+        "fn": "Info: test...",
         "lat": "",
         "long": "",
         "color": "#1C6DBD",
@@ -243,7 +243,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             expect(_items[1].times).to.be.equal('Open 24 hours');
             expect(_items[1].class).to.be.equal('all-day');
 
-            expect(paperItems[1].querySelector('iron-icon')).not.to.be.null;
             expect(paperItems[1].querySelector('.library-status').innerHTML).to.be.equal('Open 24 hours');
 
             done();
@@ -254,6 +253,30 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       });
     });
+
+
+    test('Information icon should be displayed or hidden depending on footnotes text', function (done) {
+      flush(function () {
+
+        element.addEventListener('uqlibrary-hours-loaded', function () {
+          var _items = element.hours;
+
+          setTimeout(function() {
+            var paperItems = element.querySelectorAll('.compact.hours-entry');
+
+              expect(paperItems[1].querySelector('.uqlibrary-icon-info')).to.be.null;
+              expect(paperItems[0].querySelector('.uqlibrary-icon-info')).not.to.be.null;
+
+            done();
+
+          }, 500);
+
+        });
+        element.setHours(hours);
+
+      });
+    });
+
 
     test('Displays set opening hours with 24x7 study', function (done) {
       element.addEventListener('uqlibrary-hours-loaded', function(){
@@ -266,7 +289,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           expect(_items[2].allDay).to.be.equal(true);
           expect(_items[2].class).to.be.equal('part-all-day');
 
-          expect(paperItems[2].querySelector('iron-icon')).to.be.visible;
+            expect(paperItems[2].querySelector('.uqlibrary-icon-247')).not.to.be.null;
+            expect(paperItems[1].querySelector('.uqlibrary-icon-247')).to.be.null;
 
           done();
 
