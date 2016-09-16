@@ -185,12 +185,51 @@ var hours = {
         expect(_items[2].name).to.be.equal('Law Library');
         expect(_items[2].times).to.be.equal('Closed');
         expect(_items[2].class).to.be.equal('closed');
-
         done();
       });
 
       element.setHours(hours);
     });
+
+//    test('Footnotes should appear as expected', function (done) {
+//      element.addEventListener('uqlibrary-hours-loaded', function () {
+//
+//        var paperItems = element.querySelectorAll('.noncompact');
+//
+//        // Check the DOM elements are as expected
+//        expect(paperItems[0].querySelector('.notes')).to.not.be.hidden;
+//
+//        done();
+//      });
+//      element.setHours(hours);
+//    });
+
+
+    test('Check event notes appear as expected', function (done) {
+      flush(function () {
+
+        element.addEventListener('uqlibrary-hours-loaded', function () {
+          var _items = element.hours;
+
+          setTimeout(function() {
+            var paperItems = element.querySelectorAll('.noncompact.hours-entry');
+
+            expect(paperItems[0].querySelector('.notes').innerHTML).to.contain('24x7');
+            expect(paperItems[0].querySelector('.notes')).to.be.visible;
+
+            expect(paperItems[1].querySelector('span.notes')).to.not.be.visible;
+
+            expect(paperItems[2].querySelector('.notes').innerHTML).to.contain('Law Library closed for refurbishment 27th Nov 2015 to 3rd Jan 2017');
+            expect(paperItems[2].querySelector('.notes')).to.be.visible;
+            done();
+          }, 500);
+
+        });
+        element.setHours(hours);
+      });
+    });
+
+
   });
 </script>
 

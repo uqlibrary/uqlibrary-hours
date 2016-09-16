@@ -113,7 +113,7 @@ Example:
       <template id="listCompact" is="dom-repeat" items="{{hours}}">
         <paper-item class$="detail-item compact hours-entry [[item.class]]"
                     role="link"
-                    aria-label$="[[item.name]] - Opening hours: [[item.times]]"
+                    aria-label$="[[item.name]] - Opening hours: [[item.times]] - [[item.fn]]"
                     on-tap="_itemTapHandler">
           <paper-ripple></paper-ripple>
           <div class="linked-item body1 library-abbr" title$="{{item.name}}">[[ item.abbr ]]</div>
@@ -156,10 +156,10 @@ Example:
             <!-- List of items -->
             <template is="dom-repeat" items="[[hours]]">
               <paper-item
-                      class="hours-entry"
+                      class="hours-entry noncompact"
                       role="link"
                       title$="[[item.name]]"
-                      aria-label$="[[item.name]] - Opening hours: [[item.times]]"
+                      aria-label$="[[item.name]] - Opening hours: [[item.times]] - [[item.fn]]"
                       on-tap="_itemTapHandler">
                 <paper-ripple></paper-ripple>
                 <div class="library-info">

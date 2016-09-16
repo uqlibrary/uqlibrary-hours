@@ -108,7 +108,7 @@
     /** Adds GA event */
     _viewHoursClicked: function (e) {
       this.$.ga.addEvent('Click', 'View all hours');
-      window.location.href = 'https://www.library.uq.edu.au/hours/';
+      window.location.href = 'https://web.library.uq.edu.au/locations-hours/opening-hours';
     },
     /** Parses and formats the JSON array when hours has updated */
     _hoursChanged: function () {
