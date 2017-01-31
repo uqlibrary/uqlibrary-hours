@@ -1,5 +1,8 @@
 # uqlibrary-hours
 
+[![Dependency Status](https://david-dm.org/uqlibrary/uqlibrary-hours.svg)](https://david-dm.org/uqlibrary/uqlibrary-hours)
+[![Dev Dependency Status](https://david-dm.org/uqlibrary/uqlibrary-hours/dev-status.svg)](https://david-dm.org/uqlibrary/uqlibrary-hours?type=dev)
+
 uqlibrary-hours displays academic hours to the end user
 
 Example of full documentation can be found at [GitHub Pages](http://uqlibrary.github.io/uqlibrary-hours).
