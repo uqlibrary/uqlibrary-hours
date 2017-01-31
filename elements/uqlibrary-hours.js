@@ -144,12 +144,8 @@
 
           _open  = moment(dayString + ' ' + department.open);
           _close = moment(dayString + ' ' + department.close);
-
           // Format the opening text
-          // item.times = department.rendered; //_open.format('h:mm a') + ' - ' + _close.format('h:mm a');
-
-          item.times = _open.format('h:mm a') + ' - ' + _close.format('h:mm a');
-
+          item.times = department.rendered;
           item.class = department.times.currently_open ? 'open' : 'closed';
 
           if (self._has24x7(item.departments)) {
