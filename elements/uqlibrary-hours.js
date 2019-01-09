@@ -9,7 +9,7 @@
       },
       /**
        * Autoloads the library opening hours from the API
-       * @type {Boolean}
+       * @type Object
        */
       autoLoad: {
         type: Object,
@@ -17,7 +17,7 @@
       },
       /**
        * Renders the element in compact view
-       * @type {Boolean}
+       * @type Object
        */
       compactView: {
         type: Object,
@@ -40,7 +40,7 @@
       },
       /**
        * Required. Whether the app should start in standalone mode or not.
-       * @type Boolean
+       * @type Object
        */
       standAlone: {
         type: Object,
