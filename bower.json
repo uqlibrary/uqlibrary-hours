@@ -1,6 +1,6 @@
 {
   "name": "uqlibrary-hours",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "keywords": [
     "seed",
     "polymer",
@@ -9,7 +9,7 @@
   "private": true,
   "main": "elements/uqlibrary-hours.html",
   "dependencies": {
-    "polymer": "^1.4.0",
+    "polymer": "Polymer/polymer#^1.9.3",
     "iron-elements": "PolymerElements/iron-elements#^1.0.0",
     "paper-elements": "PolymerElements/paper-elements#^1.0.0",
     "moment": "moment/moment#^2.10.3",
@@ -17,9 +17,16 @@
     "paper-header-panel": "PolymerElements/paper-header-panel#^1.1.5",
     "uqlibrary-api": "uqlibrary/uqlibrary-api",
     "uqlibrary-ga": "uqlibrary/uqlibrary-ga",
-    "uqlibrary-styles": "uqlibrary/uqlibrary-styles"
+    "uqlibrary-styles": "uqlibrary/uqlibrary-styles",
+    "lodash": "^4.17.11",
+    "byutv-jsonp": "^1.3.1"
   },
   "devDependencies": {
-    "web-component-tester": "*"
+    "web-component-tester": "*",
+    "test-fixture": "PolymerElements/test-fixture#^1.1.2"
+  },
+  "resolutions": {
+    "test-fixture": "^1.1.2",
+    "lodash": "^4.17.11"
   }
 }
