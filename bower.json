@@ -1,6 +1,6 @@
 {
   "name": "uqlibrary-hours",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "keywords": [
     "seed",
     "polymer",
@@ -9,7 +9,7 @@
   "private": true,
   "main": "elements/uqlibrary-hours.html",
   "dependencies": {
-    "polymer": "Polymer/polymer#^1.9.3",
+    "polymer": "Polymer/polymer#^1.11.3",
     "iron-elements": "PolymerElements/iron-elements#^1.0.0",
     "paper-elements": "PolymerElements/paper-elements#^1.0.0",
     "moment": "moment/moment#^2.10.3",
