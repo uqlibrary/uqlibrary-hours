@@ -15,11 +15,11 @@ Example:
   <template>
     <style is="custom-style" include="common-styles">
       :host {
-        @apply(--uql-app-host);
+        @apply --uql-app-host;
       }
 
       paper-ripple {
-        @apply(--layout-fit);
+        @apply --layout-fit;
       }
 
       paper-item {
@@ -32,7 +32,7 @@ Example:
 
       /** Full view styles */
       .library-info {
-        @apply(--layout-flex);
+        @apply --layout-flex;
       }
 
       .status {
@@ -59,12 +59,12 @@ Example:
       /** Compact view styles */
       .compact .library-status,
       .compact .library-abbr {
-          @apply(--layout-flex-3);
+          @apply --layout-flex-3;
           white-space: nowrap;
       }
 
       .library-allday {
-        @apply(--layout-flex-2);
+        @apply --layout-flex-2;
         white-space: nowrap;
           text-align: right;
       }
