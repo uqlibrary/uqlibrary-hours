@@ -6,7 +6,7 @@
 
 uqlibrary-hours displays academic hours to the end user
 
-Full documentation and demo can be found in [GitHub Pages](https://uqlibrary.github.io/uqlibrary-hours/uqlibrary-hours/).
+Full documentation and demo can be found in [GitHub Pages](https://uqlibrary.github.io/uqlibrary-hours/uqlibrary-hours/). [Demo of the compact view](https://uqlibrary.github.io/uqlibrary-hours/uqlibrary-hours/demo/index-compact.html) is available separately.
 
 ## Getting Started
 
