@@ -32,5 +32,9 @@
     "npm": "^6",
     "node": "11.10.1"
   },
-  "engine-strict": true
+  "engine-strict": true,
+  "dependencies": {
+    "lodash": "^4.17.5",
+    "moment": "^2.10.3"
+  }
 }
