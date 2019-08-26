@@ -34,7 +34,7 @@
   },
   "engine-strict": true,
   "dependencies": {
-    "lodash": "^4.17.5",
-    "moment": "^2.10.3"
+    "lodash": "^4.17.15",
+    "moment": "^2.19.3"
   }
 }
